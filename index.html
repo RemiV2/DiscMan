@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>DiscMan</title>
+    <link rel="stylesheet" href="./css/vendor/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+  </head>
+  <body>
+    <header>
+      <p id="appTitle">DiscMan</p>
+      <ul class="nav nav-pills centeredPills">
+        <li><a data-toggle="pill" href="#songsTab">Songs</a></li>
+        <li class="active"><a data-toggle="pill" href="#albumsTab">Albums</a></li>
+        <li><a data-toggle="pill" href="#artistsTab">Artists</a></li>
+      </ul>
+    </header>
+    <!-- If user has no music -->
+    <div class="firstStart">
+      <h2>Almost there!</h2>
+      <p>Drag your music folder here</p>
+      <button id="openFile" onclick="openFile();">...or select individual files</button>
+    </div>
+    <!-- If user has music -->
+    <div class="tab-content content">
+      <section id="songsTab" class="tab-pane fade">
+        <h3>Songs</h3>
+        <p>List</p>
+      </section>
+      <section id="albumsTab" class="tab-pane fade in active">
+        <h3>Albums</h3>
+        <p>List</p>
+      </section>
+      <section id="artistsTab" class="tab-pane fade">
+        <h3>Artists</h3>
+        <p>List</p>
+      </section>
+    </div>
+    <footer class="player">
+      <img src="http://lorempixel.com/output/nightlife-q-c-490-490-7.jpg" alt="Album art">
+      <div class="data">
+        <p class="title">Song Name</p>
+        <p class="artist">Pewdiepie</p>
+        <div class="mediaControls">
+          <div class="previous"></div>
+          <div class="playpause"></div>
+          <div class="next"></div>
+        </div>
+      </div>
+      <div class="volume">
+        <input id="vol-control" type="range" min="0" max="100" step="1"></input>
+        <div class="soundonoff"></div>
+      </div>
+    </footer>
+    <script type="text/javascript">window.$ = window.jQuery = require('./js/vendor/jquery.min.js');</script>
+    <script type="text/javascript" src="./js/vendor/bootstrap.min.js"></script>
+    <script type="text/javascript" src="./js/vendor/musicmetadata.js"></script>
+    <script type="text/javascript" src="./js/app.js"></script>
+    <script type="text/javascript" src="./js/dragndrop.js"></script>
+  </body>
+</html>

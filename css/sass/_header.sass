@@ -1,0 +1,45 @@
+header
+  padding: 10px
+  background-image: linear-gradient(-180deg, rgba(237,234,237,0.45) 0%, rgba(223,219,223,0.45) 100%)
+  -webkit-app-region: drag
+  box-shadow: inset 0px -1px 0px darken($primaryBackground, .2)
+
+  #appTitle
+    text-align: center
+    font-size: 14px
+
+  ul.centeredPills
+    display: flex
+    justify-content: space-around
+
+    li
+      background: rgba(243, 243, 243, 0)
+      border-radius: 3px
+      box-sizing: border-box
+      -webkit-app-region: no-drag
+      &:hover
+        background: rgba(243, 243, 243, 0)
+      &:focus
+        outline: 1px solid $primaryText
+
+      a
+        padding: 8px 25px
+        text-transform: uppercase
+        cursor: default
+        color: $primaryText
+        transition-duration: .2s
+        &:hover
+          background: rgba(243, 243, 243, 0.3)
+
+    li.active
+      background: $primaryBackground
+      color: $primaryText
+      border: .5px solid lighten($primaryBackground, .2)
+
+      // Override bootstrap default styles
+      a
+        background: $primaryBackground
+        color: $primaryText
+        &:focus, &:hover
+          background: $primaryBackground
+          color: $primaryText

@@ -1,0 +1,26 @@
+$primaryText: #333
+$primaryBackground: rgb(243, 243, 243)
+$accent: #4181ec
+
+@import header
+@import first-start
+@import player
+
+body
+  margin: 0
+  font: caption
+  //-webkit-user-select: none
+  background: rgba(243, 243, 243, 0)
+  user-select: none
+  cursor: default
+  outline: none
+
+  .content
+    min-height: calc(100vh - 179px)
+    padding: 10px
+    margin-top: 81px
+    background: rgb(243, 243, 243)
+    width: 100vw
+    position: fixed
+    bottom: 100px
+    display: none
