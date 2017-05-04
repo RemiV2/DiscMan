@@ -9,6 +9,12 @@
 	],
 "creatorBuild": "25813",
 "files": {
+	"\/.gitignore": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/.gitignore",
+		"oF": 0
+		},
 	"\/css\/sass\/_first-start.sass": {
 		"aP": 0,
 		"bl": 0,
@@ -127,8 +133,8 @@
 		"oA": 0,
 		"oAP": "\/images\/next_light.png",
 		"oF": 0,
-		"oIPL": 0,
-		"opt": 0,
+		"oIPL": 1,
+		"opt": 1,
 		"oT": 1,
 		"q": 100
 		},
@@ -138,8 +144,8 @@
 		"oA": 0,
 		"oAP": "\/images\/pause_dark.png",
 		"oF": 0,
-		"oIPL": 0,
-		"opt": 0,
+		"oIPL": 1,
+		"opt": 1,
 		"oT": 1,
 		"q": 100
 		},
@@ -149,8 +155,8 @@
 		"oA": 0,
 		"oAP": "\/images\/pause_light.png",
 		"oF": 0,
-		"oIPL": 0,
-		"opt": 0,
+		"oIPL": 1,
+		"opt": 1,
 		"oT": 1,
 		"q": 100
 		},
@@ -160,8 +166,8 @@
 		"oA": 0,
 		"oAP": "\/images\/play_dark.png",
 		"oF": 0,
-		"oIPL": 0,
-		"opt": 0,
+		"oIPL": 1,
+		"opt": 1,
 		"oT": 1,
 		"q": 100
 		},
@@ -171,8 +177,8 @@
 		"oA": 0,
 		"oAP": "\/images\/play_light.png",
 		"oF": 0,
-		"oIPL": 0,
-		"opt": 0,
+		"oIPL": 1,
+		"opt": 1,
 		"oT": 1,
 		"q": 100
 		},
@@ -204,8 +210,8 @@
 		"oA": 0,
 		"oAP": "\/images\/soundoff_dark.png",
 		"oF": 0,
-		"oIPL": 0,
-		"opt": 0,
+		"oIPL": 1,
+		"opt": 1,
 		"oT": 1,
 		"q": 100
 		},
@@ -215,8 +221,8 @@
 		"oA": 0,
 		"oAP": "\/images\/soundoff_light.png",
 		"oF": 0,
-		"oIPL": 0,
-		"opt": 0,
+		"oIPL": 1,
+		"opt": 1,
 		"oT": 1,
 		"q": 100
 		},
@@ -226,8 +232,8 @@
 		"oA": 0,
 		"oAP": "\/images\/soundon_dark.png",
 		"oF": 0,
-		"oIPL": 0,
-		"opt": 0,
+		"oIPL": 1,
+		"opt": 1,
 		"oT": 1,
 		"q": 100
 		},
@@ -248,15 +254,6 @@
 		"oAP": "\/index.html",
 		"oF": 0
 		},
-	"\/js\/app-min.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/js\/app-min-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
-		},
 	"\/js\/app.js": {
 		"ft": 64,
 		"mi": 0,
@@ -266,13 +263,13 @@
 		"sC": 0,
 		"tS": 0
 		},
-	"\/js\/dragndrop-min.js": {
+	"\/js\/display-music.js": {
 		"ft": 64,
-		"mi": 1,
+		"mi": 0,
 		"oA": 0,
-		"oAP": "\/js\/dragndrop-min-min.js",
+		"oAP": "\/js\/display-music-min.js",
 		"oF": 0,
-		"sC": 1,
+		"sC": 0,
 		"tS": 0
 		},
 	"\/js\/dragndrop.js": {

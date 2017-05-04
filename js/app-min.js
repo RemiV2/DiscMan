@@ -30,6 +30,7 @@ function checkLibrary() {
     $('.content').show();
   }
   console.log(musicLibrary);
+  displayMusic();
 }
 
 
