@@ -10,9 +10,9 @@
     <header>
       <p id="appTitle">DiscMan</p>
       <ul class="nav nav-pills centeredPills">
-        <li><a data-toggle="pill" href="#songsTab">Songs</a></li>
-        <li class="active"><a data-toggle="pill" href="#albumsTab">Albums</a></li>
-        <li><a data-toggle="pill" href="#artistsTab">Artists</a></li>
+        <li onmousedown="return false"><a data-toggle="pill" href="#songsTab">Songs</a></li>
+        <li onmousedown="return false" class="active"><a data-toggle="pill" href="#albumsTab">Albums</a></li>
+        <li onmousedown="return false"><a data-toggle="pill" href="#artistsTab">Artists</a></li>
       </ul>
     </header>
     <!-- If user has no music -->
@@ -23,13 +23,22 @@
     </div>
     <!-- If user has music -->
     <div class="tab-content content">
-      <section id="songsTab" class="tab-pane fade">
-        <h3>Songs</h3>
-        <p>List</p>
-      </section>
+      <section id="songsTab" class="tab-pane fade"></section>
       <section id="albumsTab" class="tab-pane fade in active">
-        <h3>Albums</h3>
-        <p>List</p>
+        <div class="card">
+          <div class="art"></div>
+          <div class="info">
+            <p class="title">Album name</p>
+            <p class="details">Album Name</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="art"></div>
+          <div class="info">
+            <p class="title">Album name</p>
+            <p class="details">Album Name</p>
+          </div>
+        </div>
       </section>
       <section id="artistsTab" class="tab-pane fade">
         <h3>Artists</h3>
@@ -37,7 +46,7 @@
       </section>
     </div>
     <footer class="player">
-      <img src="http://lorempixel.com/output/nightlife-q-c-490-490-7.jpg" alt="Album art">
+      <div class="art"></div>
       <div class="data">
         <p class="title">Song Name</p>
         <p class="artist">Pewdiepie</p>
@@ -55,8 +64,8 @@
     <script type="text/javascript">window.$ = window.jQuery = require('./js/vendor/jquery.min.js');</script>
     <script type="text/javascript" src="./js/vendor/bootstrap.min.js"></script>
     <script type="text/javascript" src="./js/vendor/musicmetadata.js"></script>
-    <script type="text/javascript" src="./js/app.js"></script>
     <script type="text/javascript" src="./js/dragndrop.js"></script>
     <script type="text/javascript" src="./js/display-music.js"></script>
+    <script type="text/javascript" src="./js/app.js"></script>
   </body>
 </html>

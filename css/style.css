@@ -3,7 +3,7 @@ header {
   background-image: -webkit-linear-gradient(top, rgba(237, 234, 237, 0.45) 0%, rgba(223, 219, 223, 0.45) 100%);
   background-image: linear-gradient(-180deg, rgba(237, 234, 237, 0.45) 0%, rgba(223, 219, 223, 0.45) 100%);
   -webkit-app-region: drag;
-  box-shadow: inset 0px -1px 0px #f2f2f2; }
+  border-bottom: 1px solid #f2f2f2; }
   header #appTitle {
     text-align: center;
     font-size: 14px; }
@@ -91,9 +91,10 @@ header {
   padding: 10px;
   color: #333;
   background-image: -webkit-linear-gradient(top, rgba(237, 234, 237, 0.45) 0%, rgba(223, 219, 223, 0.45) 100%);
-  background-image: linear-gradient(-180deg, rgba(237, 234, 237, 0.45) 0%, rgba(223, 219, 223, 0.45) 100%);
-  box-shadow: inset 0px 1px 0px #f2f2f2; }
-  .player img {
+  background-image: linear-gradient(-180deg, rgba(237, 234, 237, 0.45) 0%, rgba(223, 219, 223, 0.45) 100%); }
+  .player .art {
+    background: url(http://lorempixel.com/output/nightlife-q-c-490-490-7.jpg);
+    background-size: cover;
     width: 80px;
     height: 80px;
     border-radius: 2px; }
@@ -169,6 +170,46 @@ header {
           align-self: flex-end;
       width: 20px; }
 
+.card {
+  height: 60px;
+  padding: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  color: #333; }
+  .card:nth-child(even) {
+    background: #ececec; }
+  .card .art {
+    height: 40px;
+    width: 40px;
+    background: url(http://lorempixel.com/output/nightlife-q-c-490-490-7.jpg);
+    background-size: cover;
+    border-right: 3px;
+    margin-right: 10px; }
+  .card .info {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between; }
+    .card .info .details {
+      opacity: .6; }
+
 body {
   margin: 0;
   font: caption;
@@ -181,10 +222,10 @@ body {
   outline: none; }
   body .content {
     min-height: calc(100vh - 179px);
-    padding: 10px;
     margin-top: 81px;
     background: #f3f3f3;
     width: 100vw;
     position: fixed;
     bottom: 100px;
-    display: none; }
+    display: none;
+    overflow-y: scroll; }

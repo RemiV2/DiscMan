@@ -1,0 +1,26 @@
+.card
+  height: 60px
+  padding: 10px
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+  color: $primaryText
+  &:nth-child(even)
+    background: darken($primaryBackground, 2.7)
+
+  .art
+    height: 40px
+    width: 40px
+    background: url(http://lorempixel.com/output/nightlife-q-c-490-490-7.jpg)
+    background-size: cover
+    border-right: 3px
+    margin-right: 10px
+
+  .info
+    flex: 1
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+
+    .details
+      opacity: .6
