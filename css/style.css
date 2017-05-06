@@ -62,10 +62,7 @@ header {
   width: 100%;
   background: #f3f3f3; }
   .firstStart p {
-    margin: 20px auto 25px auto; }
-  .firstStart button#openFile {
-    width: 180px;
-    margin: 0 auto; }
+    margin: 25px auto 0 auto; }
 
 .firstStart.draggedOver {
   background: #4181ec;
@@ -74,7 +71,7 @@ header {
     visibility: hidden; }
 
 .player {
-  height: 100px;
+  height: 82px;
   width: 100%;
   position: fixed;
   bottom: 0;
@@ -95,8 +92,8 @@ header {
   .player .art {
     background: url(http://lorempixel.com/output/nightlife-q-c-490-490-7.jpg);
     background-size: cover;
-    width: 80px;
-    height: 80px;
+    width: 62px;
+    height: 62px;
     border-radius: 2px; }
   .player .data {
     display: -webkit-box;
@@ -114,7 +111,8 @@ header {
         -ms-flex-pack: justify;
             justify-content: space-between; }
     .player .data .artist {
-      opacity: .6; }
+      opacity: .6;
+      margin: 0; }
     .player .data .mediaControls {
       display: -webkit-box;
       display: -ms-flexbox;
@@ -128,7 +126,11 @@ header {
               justify-content: space-between;
       -ms-flex-wrap: wrap;
           flex-wrap: wrap;
-      width: 100px; }
+      width: 100px;
+      -webkit-box-flex: 1;
+          -ms-flex: 1;
+              flex: 1;
+      height: 25px; }
       .player .data .mediaControls div {
         width: 25px;
         height: 25px; }
@@ -189,7 +191,7 @@ header {
   .card .art {
     height: 40px;
     width: 40px;
-    background: url(http://lorempixel.com/output/nightlife-q-c-490-490-7.jpg);
+    background: url(../images/album-art-default.svg);
     background-size: cover;
     border-right: 3px;
     margin-right: 10px; }
@@ -206,7 +208,10 @@ header {
             flex-direction: column;
     -webkit-box-pack: justify;
         -ms-flex-pack: justify;
-            justify-content: space-between; }
+            justify-content: space-between;
+    padding: 1px 0; }
+    .card .info p {
+      margin: 0; }
     .card .info .details {
       opacity: .6; }
 
@@ -221,11 +226,11 @@ body {
   cursor: default;
   outline: none; }
   body .content {
-    min-height: calc(100vh - 179px);
-    margin-top: 81px;
+    min-height: calc(100vh - 164px);
+    top: 82px;
     background: #f3f3f3;
     width: 100vw;
     position: fixed;
-    bottom: 100px;
+    bottom: 82px;
     display: none;
     overflow-y: scroll; }

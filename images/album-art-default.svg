@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="256px" height="256px" viewBox="0 0 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41.2 (35397) - http://www.bohemiancoding.com/sketch -->
+    <title>album-art-default</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="0%" y1="0%" x2="101.999998%" y2="100.999999%" id="linearGradient-1">
+            <stop stop-color="#3023AE" offset="0%"></stop>
+            <stop stop-color="#C96DD8" offset="100%"></stop>
+        </linearGradient>
+        <path d="M0,12.994837 C0,5.81798672 5.82725025,0 13.0093063,0 L192.775309,0 C199.960151,0 205.784615,5.81706048 205.784615,12.994837 L205.784615,98.8567255 C205.784615,106.033576 199.957365,111.851562 192.775309,111.851562 L13.0093063,111.851562 C5.82446481,111.851562 0,106.034502 0,98.8567255 L0,12.994837 Z M88.7149192,31.6833601 L88.7149192,91.628256 L137.457692,61.6558081 L88.7149192,31.6833601 Z" id="path-2"></path>
+        <mask id="mask-3" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="205.784615" height="111.851562" fill="white">
+            <use xlink:href="#path-2"></use>
+        </mask>
+        <path d="M85.0171021,188.03134 C39.6178573,181.150173 4.82307692,141.918108 4.82307692,94.5507812 C4.82307692,42.3318267 47.1106433,0 99.275,0 C151.439357,0 193.726923,42.3318267 193.726923,94.5507812 C193.726923,146.769736 151.439357,189.101562 99.275,189.101562 C94.8911894,189.101562 90.5771332,188.802596 86.3520678,188.223919 L150.397823,154.980881 L78.3901788,121.088202 L85.0171021,188.03134 Z M100.078846,108.632813 C107.404054,108.632813 113.342308,102.688343 113.342308,95.3554688 C113.342308,88.0225943 107.404054,82.078125 100.078846,82.078125 C92.7536386,82.078125 86.8153846,88.0225943 86.8153846,95.3554688 C86.8153846,102.688343 92.7536386,108.632813 100.078846,108.632813 Z" id="path-4"></path>
+        <mask id="mask-5" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="188.903846" height="189.101562" fill="white">
+            <use xlink:href="#path-4"></use>
+        </mask>
+        <path d="M144.733237,11.6508219 C136.987144,7.38528698 128.578754,4.17605226 119.701696,2.21694963 L102.544264,82.3070748 C103.768014,82.5373543 104.932466,82.9358841 106.012731,83.4777488 L144.733237,11.6508219 Z" id="path-6"></path>
+        <mask id="mask-7" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="42.1889727" height="81.2607992" fill="white">
+            <use xlink:href="#path-6"></use>
+        </mask>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="album-art-default">
+            <rect id="Rectangle-2" fill-opacity="0.7" fill="url(#linearGradient-1)" x="0" y="0" width="256" height="256"></rect>
+            <g id="Logo" transform="translate(26.000000, 25.000000)">
+                <g id="Box" transform="translate(0.000000, 94.148438)">
+                    <use id="Combined-Shape" stroke="#FFFFFF" mask="url(#mask-3)" stroke-width="10" fill="#FFFFFF" xlink:href="#path-2"></use>
+                    <g id="Play" transform="translate(69.130769, 28.739638)"></g>
+                </g>
+                <g id="Disc" transform="translate(3.215385, 0.000000)" stroke="#FFFFFF">
+                    <use id="Combined-Shape" mask="url(#mask-5)" stroke-width="16" xlink:href="#path-4"></use>
+                    <use id="Combined-Shape" mask="url(#mask-7)" stroke-width="10" fill="#FFFFFF" xlink:href="#path-6"></use>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

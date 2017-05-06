@@ -1,14 +1,15 @@
 {
-  "name": "your-app",
+  "name": "DiscMan-lol",
   "version": "0.1.0",
   "main": "main.js",
-  "description": "A powerful & compact music player",
+  "description": "A powerful & compact music player for macOS",
   "keywords": [
     "Music",
     "player",
     "flac",
     "mp3",
-    "reader"
+    "reader",
+    "macOS"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
