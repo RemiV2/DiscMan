@@ -9,12 +9,6 @@
 	],
 "creatorBuild": "25813",
 "files": {
-	"\/.gitignore": {
-		"ft": 8192,
-		"oA": 2,
-		"oAP": "\/.gitignore",
-		"oF": 0
-		},
 	"\/css\/sass\/_cards.sass": {
 		"aP": 0,
 		"bl": 0,
@@ -380,12 +374,6 @@
 		"ft": 65536,
 		"oA": 2,
 		"oAP": "\/build\/node_modules",
-		"oF": 0
-		},
-	"\/npm-debug.log": {
-		"ft": 8192,
-		"oA": 2,
-		"oAP": "\/npm-debug.log",
 		"oF": 0
 		},
 	"\/package.json": {

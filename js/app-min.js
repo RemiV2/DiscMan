@@ -1,7 +1,17 @@
 var remote = require('electron').remote,
+ipcRenderer = require('electron'),
 dialog = remote.dialog,
-musicLibrary = localStorage.getItem('musicLibrary');
-// localStorage.setItem("musicLibrary", JSON.stringify(musicLibrary));
+musicLibrary = localStorage.getItem('musicLibrary'),
+card, playingCardIndex,
+audio = $('.player audio'),
+alphabeticallyOrderedDivs,
+audioDuration = 0;
+
+// ipcRenderer.on('global-shortcut', function (arg) {
+//     if (arg == 'next') {
+//       nextSong();
+//     }
+// });
 
 if (musicLibrary === null) {
   // if user has no music
@@ -12,35 +22,34 @@ if (musicLibrary === null) {
   checkLibrary();
 }
 
-$('.playpause').on('click', function(){
-  $(this).toggleClass('playing');
-});
-
-function openFile() {
-  dialog.showOpenDialog(function (fileNames) {
-
-  });
-}
-
-var card;
-
 function checkLibrary() {
   musicLibrary = JSON.parse(localStorage.getItem('musicLibrary'));
   if (musicLibrary.length > 0) {
     // get rid of 'first start' page
     $('.firstStart').hide();
     $('.content').show();
+    // delete duplicates
+    musicLibrary = musicLibrary.filter(function(elem, index, self) {
+      return index == self.indexOf(elem);
+    });
+    displayMusic();
+    // Sort alphabetically
+    alphabeticallyOrderedDivs = $('#songsTab .card').sort(function (a, b) {
+        return $(a).find(".title").text() > $(b).find(".title").text();
+    });
+    console.log(alphabeticallyOrderedDivs);
+    $('#songsTab').html(alphabeticallyOrderedDivs);
   }
-  console.log(musicLibrary);
-  //displayMusic();
+}
 
+function displayMusic(){
   for (i=0; i<musicLibrary.length; i++) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = "arraybuffer";
     xhr.open("get", musicLibrary[i], true);
     let j = i; // avoid closure problem where only last iteration is executed
     xhr.onload = function(e) {
-
+      //console.log(e.target.response);
       showMetaData(e.target.response, j);
       //displayMusic(i);
     }
@@ -52,7 +61,6 @@ function showMetaData(data, index) {
   musicmetadata(data, function (err, result) {
     card = "<div class='card' id='" + index + "'> <div class='art'></div> <div class='info'> <p class='title'>Song name</p> <p class='details'>Album Name</p> </div> </div>";
     if (err) throw err;
-    console.log(result);
     // create song card and show details
     $('#songsTab').append(card);
     $('#songsTab #' + index + ' .title').html(result.title); // song name
@@ -69,25 +77,93 @@ function showMetaData(data, index) {
   });
 }
 
-// function displayMusic(index) {
-//   displaySongs(index);
-//   displayAlbums(index);
-//   displayArtists(index);
-// }
+function playMusic(source, index) {
+  audio.attr('src', source);
+  audioDuration = audio.get(0).duration;
+  if (audio.get(0).paused) {
+    audio.get(0).play();
+  }
+  // update footer player with current song's metadata
+  var newArt = $('#' + index + ' .art').css('background');
+  $('.player .art').css({
+    'background' : newArt,
+    'background-size' : 'cover'
+  });
+  $('.player .title').text($('#' + index + ' .title').text());
+  $('.player .artist').text($('#' + index + ' .details').text());
+}
 
-// function displaySongs(index) {
-//   // code
-//   $('#songsTab').append(card);
-//   $('#songsTab #' + index + '.title').html = JSON.stringify(result, undefined, 2);
-//
-// }
-//
-// function displayAlbums(index) {
-//   // code
-// }
-//
-// function displayArtists(index) {
-//   // code
-// }
+// Play music on card click
+$(document).on('click', '.card', function() {
+  if (!audio.get(0).paused) {
+    audio.get(0).pause();
+  }
+  playingCardIndex = $(this).attr('id');
+  playMusic(musicLibrary[playingCardIndex], playingCardIndex);
+  //audio.play();
+});
+
+$('.playpause').on('click', function(){
+  if ($(this).hasClass('playing')) {
+    audio.get(0).pause();
+  } else {
+    audio.get(0).play();
+  }
+  $(this).toggleClass('playing');
+});
+
+$('.next').on('click', function(){
+  nextSong();
+});
+
+$('.previous').on('click', function(){
+  previousSong();
+});
+
+$('.soundonoff').click(function() {
+  if ($(this).hasClass('muted')) {
+    // turn on sound
+    if ($('.volume input').value != 'undefined') {
+      audio.get(0).volume = $('.volume input').value;
+    } else {
+      audio.get(0).volume = 0.8;
+    }
+  } else {
+    audio.get(0).volume = 0;
+  }
+  $(this).toggleClass('muted');
+});
+
+$('.volume input').on('input', function(){
+  // update volume on slider change
+  audio.get(0).volume = this.value;
+  if (this.value == 0) {
+    $('.soundonoff').addClass('muted');
+  } else {
+    $('.soundonoff').removeClass('muted');
+  }
+});
+
+$('#volumeControl').on('input', function(){
+  audio.get(0).currentTime = this.value * audioDuration;
+});
+
+$(document).on('ended', audio, function () {
+  nextSong();
+});
+
+function previousSong() {
+  if (!audio.get(0).paused) {
+    playingCardIndex--;
+    playMusic(musicLibrary[playingCardIndex], playingCardIndex);
+  }
+}
+
+function nextSong() {
+  if (!audio.get(0).paused) {
+    playingCardIndex++;
+    playMusic(musicLibrary[playingCardIndex], playingCardIndex);
+  }
+}
 
 

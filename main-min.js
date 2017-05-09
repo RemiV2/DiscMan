@@ -1,4 +1,4 @@
-const {app, BrowserWindow, globalShortcut} = require('electron')
+const {app, BrowserWindow, globalShortcut, ipcMain} = require('electron')
 const path = require('path')
 const url = require('url')
 const windowStateKeeper = require('electron-window-state')
@@ -9,8 +9,8 @@ let win
 
 function createWindow () {
   let mainWindowState = windowStateKeeper({
-    defaultWidth: 350,
-    defaultHeight: 550
+    defaultWidth: 330,
+    defaultHeight: 500
   })
   // Create the browser window.
   win = new BrowserWindow({
@@ -52,7 +52,6 @@ function createWindow () {
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
 
 app.on('ready', () => {
   createWindow()

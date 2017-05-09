@@ -27,13 +27,7 @@
         <div class="card">
           <div class="art"></div>
           <div class="info">
-            <p class="title">Album name</p>
-            <p class="details">Album Name</p>
-          </div>
-        </div>
-        <div class="card">
-          <div class="art"></div>
-          <div class="info">
+            <audio src=""></audio>
             <p class="title">Album name</p>
             <p class="details">Album Name</p>
           </div>
@@ -44,19 +38,21 @@
         <p>List</p>
       </section>
     </div>
+    <input id="timeControl" type="range" min="0" max="1" step="0.01" value="0"></input>
     <footer class="player">
+      <audio></audio>
       <div class="art"></div>
       <div class="data">
         <p class="title">Song Name</p>
         <p class="artist">Pewdiepie</p>
         <div class="mediaControls">
           <div class="previous"></div>
-          <div class="playpause"></div>
+          <div class="playpause playing"></div>
           <div class="next"></div>
         </div>
       </div>
       <div class="volume">
-        <input id="vol-control" type="range" min="0" max="100" step="1"></input>
+        <input id="vol-control" type="range" min="0" max="1" step="0.01" value="1"></input>
         <div class="soundonoff"></div>
       </div>
     </footer>
