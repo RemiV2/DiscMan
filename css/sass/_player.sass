@@ -1,16 +1,3 @@
-#timeControl
-  width: 100%
-  position: fixed
-  bottom: 82px
-  z-index: 300
-  -webkit-appearance: none
-  width: 100%
-  border-radius: 4px
-  height: 4px
-  background-color: $primaryBackground
-  box-shadow: 0 -1px 1px 0 rgba(0, 0, 0, 0.25)
-  outline: none
-
 .player
   height: 82px
   width: 100%
@@ -19,13 +6,27 @@
   display: flex
   flex-direction: row
   justify-content: space-between
-  padding: 10px
+  padding: 10px 10px 10px 0
   color: $primaryText
-  background-image: linear-gradient(-180deg, rgba(237,234,237,0.45) 0%, rgba(223,219,223,0.45) 100%)
+  background-image: linear-gradient(-180deg, rgba(235, 234, 237, 0.45) 0%, rgba(223, 219, 223, 0.45) 100%)
+
+  #timeControl
+    width: 100%
+    position: fixed
+    bottom: 82px
+    z-index: 300
+    -webkit-appearance: none
+    width: 100%
+    border-radius: 4px
+    height: 4px
+    background-color: $primaryBackground
+    box-shadow: 0 -1px 1px 0 rgba(0, 0, 0, 0.25)
+    outline: none
 
   .art
     background: url(../images/album-art-default.svg)
     background-size: cover
+    margin-left: 10px
     width: 62px
     height: 62px
     border-radius: 2px

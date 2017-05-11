@@ -3,7 +3,8 @@ header {
   background-image: -webkit-linear-gradient(top, rgba(237, 234, 237, 0.45) 0%, rgba(223, 219, 223, 0.45) 100%);
   background-image: linear-gradient(-180deg, rgba(237, 234, 237, 0.45) 0%, rgba(223, 219, 223, 0.45) 100%);
   -webkit-app-region: drag;
-  border-bottom: 1px solid silver; }
+  border-bottom: 1px solid silver;
+  height: 82px; }
   header #appTitle {
     text-align: center;
     font-size: 14px; }
@@ -71,19 +72,6 @@ header {
   .firstStart.draggedOver button {
     visibility: hidden; }
 
-#timeControl {
-  width: 100%;
-  position: fixed;
-  bottom: 82px;
-  z-index: 300;
-  -webkit-appearance: none;
-  width: 100%;
-  border-radius: 4px;
-  height: 4px;
-  background-color: #f3f3f3;
-  box-shadow: 0 -1px 1px 0 rgba(0, 0, 0, 0.25);
-  outline: none; }
-
 .player {
   height: 82px;
   width: 100%;
@@ -99,13 +87,26 @@ header {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  padding: 10px;
+  padding: 10px 10px 10px 0;
   color: #333;
-  background-image: -webkit-linear-gradient(top, rgba(237, 234, 237, 0.45) 0%, rgba(223, 219, 223, 0.45) 100%);
-  background-image: linear-gradient(-180deg, rgba(237, 234, 237, 0.45) 0%, rgba(223, 219, 223, 0.45) 100%); }
+  background-image: -webkit-linear-gradient(top, rgba(235, 234, 237, 0.45) 0%, rgba(223, 219, 223, 0.45) 100%);
+  background-image: linear-gradient(-180deg, rgba(235, 234, 237, 0.45) 0%, rgba(223, 219, 223, 0.45) 100%); }
+  .player #timeControl {
+    width: 100%;
+    position: fixed;
+    bottom: 82px;
+    z-index: 300;
+    -webkit-appearance: none;
+    width: 100%;
+    border-radius: 4px;
+    height: 4px;
+    background-color: #f3f3f3;
+    box-shadow: 0 -1px 1px 0 rgba(0, 0, 0, 0.25);
+    outline: none; }
   .player .art {
     background: url(../images/album-art-default.svg);
     background-size: cover;
+    margin-left: 10px;
     width: 62px;
     height: 62px;
     border-radius: 2px; }
