@@ -77,7 +77,10 @@ function showMetaData(data, index) {
 }
 
 function playMusic(source, index) {
+  // update audio tag with selected source
   audio.attr('src', source);
+  // make sure play button becomes pause
+  $('.playpause').addClass('playing');
   if (audio[0].paused) {
     audio[0].play();
   }
