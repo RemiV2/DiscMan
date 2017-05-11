@@ -132,7 +132,7 @@ $('.previous').on('click', function(){
 $('.soundonoff').click(function() {
   if ($(this).hasClass('muted')) {
     // turn on sound
-    if ($('.volume input').value != 'undefined') {
+    if ($('.volume input').value != undefined) {
       audio[0].volume = $('.volume input').value;
     } else {
       audio[0].volume = 0.8;

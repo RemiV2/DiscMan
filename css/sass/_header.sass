@@ -13,6 +13,10 @@ header
     display: flex
     justify-content: space-around
 
+    li.active a
+      padding: 7px 20px
+      font-size: 13px
+
     li
       background: rgba(243, 243, 243, 0)
       border-radius: 3px
@@ -25,13 +29,15 @@ header
         outline: 1px solid $primaryText
 
       a
-        padding: 8px 25px
+        padding: 7px 20px
+        font-size: 13px
         text-transform: uppercase
         cursor: default
         color: $primaryText
         transition-duration: .2s
         &:hover
           background: rgba(243, 243, 243, 0.3)
+          padding: 7px 20px
 
     li.active
       background: $primaryBackground

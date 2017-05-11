@@ -14,6 +14,9 @@ header {
     display: flex;
     -ms-flex-pack: distribute;
         justify-content: space-around; }
+    header ul.centeredPills li.active a {
+      padding: 7px 20px;
+      font-size: 13px; }
     header ul.centeredPills li {
       background: rgba(243, 243, 243, 0);
       border-radius: 3px;
@@ -25,14 +28,16 @@ header {
       header ul.centeredPills li:focus {
         outline: 1px solid #333; }
       header ul.centeredPills li a {
-        padding: 8px 25px;
+        padding: 7px 20px;
+        font-size: 13px;
         text-transform: uppercase;
         cursor: default;
         color: #333;
         -webkit-transition-duration: .2s;
                 transition-duration: .2s; }
         header ul.centeredPills li a:hover {
-          background: rgba(243, 243, 243, 0.3); }
+          background: rgba(243, 243, 243, 0.3);
+          padding: 7px 20px; }
     header ul.centeredPills li.active {
       background: #f3f3f3;
       color: #333;
