@@ -93,6 +93,14 @@ function playMusic(source, index) {
 
 // Play music on card click
 $(document).on('click', '.card', function() {
+  if (audio.attr('src') == undefined) {
+    console.log('yeeepeeee');
+    $('.player').css('display', 'flex').animate({'bottom': '0px'}, 600);
+    $('.content').animate({
+      'min-height': '-86px',
+      'bottom': '86px'
+    }, 600);
+  }
   if (!audio[0].paused) {
     audio[0].pause();
   }
@@ -149,7 +157,6 @@ $('#timeControl').on('input', function(){
 // Keep track of audio position in progress bar
 audio[0].ontimeupdate = function() {
   $('#timeControl').val(this.currentTime / this.duration);
-  //attr('value', this.currentTime / this.duration);
 };
 
 audio[0].onended = function() {

@@ -4,8 +4,7 @@ dialog = remote.dialog,
 musicLibrary = localStorage.getItem('musicLibrary'),
 card, playingCardIndex,
 audio = $('.player audio'),
-alphabeticallyOrderedDivs,
-audioDuration = 0;
+alphabeticallyOrderedDivs;
 
 // ipcRenderer.on('global-shortcut', function (arg) {
 //     if (arg == 'next') {
@@ -79,9 +78,8 @@ function showMetaData(data, index) {
 
 function playMusic(source, index) {
   audio.attr('src', source);
-  audioDuration = audio.get(0).duration;
-  if (audio.get(0).paused) {
-    audio.get(0).play();
+  if (audio[0].paused) {
+    audio[0].play();
   }
   // update footer player with current song's metadata
   var newArt = $('#' + index + ' .art').css('background');
@@ -95,8 +93,16 @@ function playMusic(source, index) {
 
 // Play music on card click
 $(document).on('click', '.card', function() {
-  if (!audio.get(0).paused) {
-    audio.get(0).pause();
+  if (audio.attr('src') == undefined) {
+    console.log('yeeepeeee');
+    $('.player').css('display', 'flex').animate({'bottom': '0px'}, 600);
+    $('.content').animate({
+      'min-height': '-86px',
+      'bottom': '86px'
+    }, 600);
+  }
+  if (!audio[0].paused) {
+    audio[0].pause();
   }
   playingCardIndex = $(this).attr('id');
   playMusic(musicLibrary[playingCardIndex], playingCardIndex);
@@ -105,9 +111,9 @@ $(document).on('click', '.card', function() {
 
 $('.playpause').on('click', function(){
   if ($(this).hasClass('playing')) {
-    audio.get(0).pause();
+    audio[0].pause();
   } else {
-    audio.get(0).play();
+    audio[0].play();
   }
   $(this).toggleClass('playing');
 });
@@ -124,19 +130,19 @@ $('.soundonoff').click(function() {
   if ($(this).hasClass('muted')) {
     // turn on sound
     if ($('.volume input').value != 'undefined') {
-      audio.get(0).volume = $('.volume input').value;
+      audio[0].volume = $('.volume input').value;
     } else {
-      audio.get(0).volume = 0.8;
+      audio[0].volume = 0.8;
     }
   } else {
-    audio.get(0).volume = 0;
+    audio[0].volume = 0;
   }
   $(this).toggleClass('muted');
 });
 
 $('.volume input').on('input', function(){
   // update volume on slider change
-  audio.get(0).volume = this.value;
+  audio[0].volume = this.value;
   if (this.value == 0) {
     $('.soundonoff').addClass('muted');
   } else {
@@ -144,26 +150,28 @@ $('.volume input').on('input', function(){
   }
 });
 
-$('#volumeControl').on('input', function(){
-  audio.get(0).currentTime = this.value * audioDuration;
+$('#timeControl').on('input', function(){
+  audio[0].currentTime = this.value * audio[0].duration;
 });
 
-$(document).on('ended', audio, function () {
+// Keep track of audio position in progress bar
+audio[0].ontimeupdate = function() {
+  $('#timeControl').val(this.currentTime / this.duration);
+};
+
+audio[0].onended = function() {
+  console.log('ended');
   nextSong();
-});
+}
 
 function previousSong() {
-  if (!audio.get(0).paused) {
-    playingCardIndex--;
-    playMusic(musicLibrary[playingCardIndex], playingCardIndex);
-  }
+  playingCardIndex--;
+  playMusic(musicLibrary[playingCardIndex], playingCardIndex);
 }
 
 function nextSong() {
-  if (!audio.get(0).paused) {
-    playingCardIndex++;
-    playMusic(musicLibrary[playingCardIndex], playingCardIndex);
-  }
+  playingCardIndex++;
+  playMusic(musicLibrary[playingCardIndex], playingCardIndex);
 }
 
 

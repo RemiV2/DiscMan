@@ -3,7 +3,7 @@ header {
   background-image: -webkit-linear-gradient(top, rgba(237, 234, 237, 0.45) 0%, rgba(223, 219, 223, 0.45) 100%);
   background-image: linear-gradient(-180deg, rgba(237, 234, 237, 0.45) 0%, rgba(223, 219, 223, 0.45) 100%);
   -webkit-app-region: drag;
-  border-bottom: 1px solid silver;
+  border-bottom: 1px solid #cdcdcd;
   height: 82px; }
   header #appTitle {
     text-align: center;
@@ -76,10 +76,7 @@ header {
   height: 82px;
   width: 100%;
   position: fixed;
-  bottom: 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  bottom: -86px;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
@@ -90,10 +87,11 @@ header {
   padding: 10px 10px 10px 0;
   color: #333;
   background-image: -webkit-linear-gradient(top, rgba(235, 234, 237, 0.45) 0%, rgba(223, 219, 223, 0.45) 100%);
-  background-image: linear-gradient(-180deg, rgba(235, 234, 237, 0.45) 0%, rgba(223, 219, 223, 0.45) 100%); }
+  background-image: linear-gradient(-180deg, rgba(235, 234, 237, 0.45) 0%, rgba(223, 219, 223, 0.45) 100%);
+  display: none; }
   .player #timeControl {
     width: 100%;
-    position: fixed;
+    position: absolute;
     bottom: 82px;
     z-index: 300;
     -webkit-appearance: none;
@@ -246,11 +244,11 @@ body {
   cursor: default;
   outline: none; }
   body .content {
-    min-height: calc(100vh - 168px);
+    min-height: calc(100vh - 82px);
     top: 82px;
+    bottom: 0;
     background: #f3f3f3;
     width: 100vw;
     position: fixed;
-    bottom: 86px;
     display: none;
     overflow-y: scroll; }
