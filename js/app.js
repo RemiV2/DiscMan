@@ -32,11 +32,17 @@ function checkLibrary() {
       return index == self.indexOf(elem);
     });
     displayMusic();
-    // Sort alphabetically
+
+    // sort alphabetically
     alphabeticallyOrderedDivs = $('#songsTab .card').sort(function (a, b) {
-        return $(a).find(".title").text() > $(b).find(".title").text();
+      a = $(a).find('.title').text().toUpperCase();
+      b = $(b).find('.title').text().toUpperCase();
+      if (a<b) return -1;
+      if (a>b) return 1;
+      if (a=b) return 0;
     });
-    console.log(alphabeticallyOrderedDivs);
+    console.log(alphabeticallyOrderedDivs.html());
+    $('#songsTab').html('');
     $('#songsTab').html(alphabeticallyOrderedDivs);
   }
 }
@@ -53,6 +59,7 @@ function displayMusic(){
       //displayMusic(i);
     }
     xhr.send();
+    console.log('yolo');
   }
 }
 
@@ -96,8 +103,8 @@ function playMusic(source, index) {
 
 // Play music on card click
 $(document).on('click', '.card', function() {
+  // reveal bottom player if it's the first song to be played
   if (audio.attr('src') == undefined) {
-    console.log('yeeepeeee');
     $('.player').css('display', 'flex').animate({'bottom': '0px'}, 600);
     $('.content').animate({
       'min-height': '-86px',
@@ -109,16 +116,20 @@ $(document).on('click', '.card', function() {
   }
   playingCardIndex = $(this).attr('id');
   playMusic(musicLibrary[playingCardIndex], playingCardIndex);
-  //audio.play();
 });
 
-$('.playpause').on('click', function(){
-  if ($(this).hasClass('playing')) {
-    audio[0].pause();
-  } else {
-    audio[0].play();
+// Play or pause on space bar press
+$(window).keypress(function(e) {
+  // don't play or pause if no song is selected
+  if (e.which == 32 && audio.attr('src') != undefined) {
+    e.preventDefault();
+    playOrPause();
   }
-  $(this).toggleClass('playing');
+});
+
+// Handle click on play/pause button
+$('.playpause').on('click', function(){
+  playOrPause();
 });
 
 $('.next').on('click', function(){
@@ -140,11 +151,11 @@ $('.soundonoff').click(function() {
   } else {
     audio[0].volume = 0;
   }
-  $(this).toggleClass('muted');
+  $(this).toggleClass('muted'); // switch icon
 });
 
+// update volume on slider change
 $('.volume input').on('input', function(){
-  // update volume on slider change
   audio[0].volume = this.value;
   if (this.value == 0) {
     $('.soundonoff').addClass('muted');
@@ -163,8 +174,16 @@ audio[0].ontimeupdate = function() {
 };
 
 audio[0].onended = function() {
-  console.log('ended');
   nextSong();
+}
+
+function playOrPause() {
+  if ($('.playpause').hasClass('playing')) {
+    audio[0].pause();
+  } else {
+    audio[0].play();
+  }
+  $('.playpause').toggleClass('playing'); // switch icon
 }
 
 function previousSong() {

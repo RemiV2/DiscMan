@@ -280,21 +280,12 @@
 		"sC": 1,
 		"tS": 0
 		},
-	"\/js\/display-music-min.js": {
-		"ft": 64,
-		"mi": 1,
-		"oA": 0,
-		"oAP": "\/js\/display-music-min-min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
-		},
-	"\/js\/display-music.js": {
+	"\/js\/app.js": {
 		"ft": 64,
 		"mi": 0,
-		"oA": 0,
-		"oAP": "\/js\/display-music-min.js",
-		"oF": 0,
+		"oA": 1,
+		"oAP": "\/js\/app-min.js",
+		"oF": 1,
 		"sC": 0,
 		"tS": 0
 		},
@@ -310,9 +301,9 @@
 	"\/js\/dragndrop.js": {
 		"ft": 64,
 		"mi": 0,
-		"oA": 0,
+		"oA": 1,
 		"oAP": "\/js\/dragndrop-min.js",
-		"oF": 0,
+		"oF": 1,
 		"sC": 0,
 		"tS": 0
 		},
