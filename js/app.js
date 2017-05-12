@@ -210,7 +210,7 @@ function nextSong() {
   }
 }
 
-// TODO: fix bug when playNext on last song
 // TODO: Save HTML in localStorage
 // TODO: Album and Artist tabs
+// TODO: Fix drag n drop only working 2nd time
 // TODO: Dark Theme
