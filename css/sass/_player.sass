@@ -29,6 +29,7 @@
     margin-left: 10px
     width: 62px
     height: 62px
+    min-width: 62px
     border-radius: 2px
 
   .data
@@ -37,13 +38,21 @@
     margin: 0 6px
     flex-direction: column
     justify-content: space-between
+    // allows text ellipsis despite flexbox
+    min-width: 0
 
     .title
       margin-bottom: 6px
+      white-space: nowrap
+      overflow: hidden
+      text-overflow: ellipsis
 
     .artist
       opacity: .6
       margin-bottom: 4px
+      white-space: nowrap
+      overflow: hidden
+      text-overflow: ellipsis
 
     .mediaControls
       display: flex

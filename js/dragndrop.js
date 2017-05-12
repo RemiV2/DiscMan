@@ -2,19 +2,16 @@ document.ondragover = (event) => {
   // Prevent app from opening file
   event.preventDefault();
   $('.firstStart').show().addClass('draggedOver');
-  $('#timeControl').hide();
   return false;
 }
 
 document.ondragleave = document.ondragend = () => {
   $('.firstStart').removeClass('draggedOver');
-  $('#timeControl').show();
   return false;
 }
 
 document.ondrop = (event) => {
   $('.firstStart').removeClass('draggedOver');
-  $('#timeControl').show();
   event.preventDefault();
   var items = event.dataTransfer.items;
   for (var i=0; i<items.length; i++) {

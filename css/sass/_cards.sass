@@ -22,9 +22,14 @@
     flex-direction: column
     justify-content: space-between
     padding: 1px 0
+    // allows text ellipsis despite flexbox
+    min-width: 0
 
     p
       margin: 0
+      white-space: nowrap
+      overflow: hidden
+      text-overflow: ellipsis
 
     .details
       opacity: .6

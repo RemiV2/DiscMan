@@ -112,6 +112,7 @@ header {
     margin-left: 10px;
     width: 62px;
     height: 62px;
+    min-width: 62px;
     border-radius: 2px; }
   .player .data {
     display: -webkit-box;
@@ -127,12 +128,19 @@ header {
             flex-direction: column;
     -webkit-box-pack: justify;
         -ms-flex-pack: justify;
-            justify-content: space-between; }
+            justify-content: space-between;
+    min-width: 0; }
     .player .data .title {
-      margin-bottom: 6px; }
+      margin-bottom: 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis; }
     .player .data .artist {
       opacity: .6;
-      margin-bottom: 4px; }
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis; }
     .player .data .mediaControls {
       display: -webkit-box;
       display: -ms-flexbox;
@@ -232,9 +240,13 @@ header {
     -webkit-box-pack: justify;
         -ms-flex-pack: justify;
             justify-content: space-between;
-    padding: 1px 0; }
+    padding: 1px 0;
+    min-width: 0; }
     .card .info p {
-      margin: 0; }
+      margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis; }
     .card .info .details {
       opacity: .6; }
 

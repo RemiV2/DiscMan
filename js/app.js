@@ -33,17 +33,22 @@ function checkLibrary() {
     });
     displayMusic();
 
-    // sort alphabetically
-    alphabeticallyOrderedDivs = $('#songsTab .card').sort(function (a, b) {
-      a = $(a).find('.title').text().toUpperCase();
-      b = $(b).find('.title').text().toUpperCase();
-      if (a<b) return -1;
-      if (a>b) return 1;
-      if (a=b) return 0;
-    });
-    console.log(alphabeticallyOrderedDivs.html());
-    $('#songsTab').html('');
-    $('#songsTab').html(alphabeticallyOrderedDivs);
+    // sort alphabetically (timeout to make sure divs are created)
+    setTimeout(function(){
+      alphabeticallyOrderedDivs = $('#songsTab .card').sort(function (a, b) {
+        a = $(a).find('.title').text().toUpperCase();
+        b = $(b).find('.title').text().toUpperCase();
+        if (a<b) return -1;
+        if (a>b) return 1;
+        if (a=b) return 0;
+      });
+      console.log(alphabeticallyOrderedDivs);
+      $('#songsTab').html(alphabeticallyOrderedDivs);
+      // update index number based on new sorting
+      for (i=0; i<$('#songsTab .card').length; i++) {
+        $($('#songsTab .card')[i]).attr('id', i);
+      }
+    }, 3000);
   }
 }
 
