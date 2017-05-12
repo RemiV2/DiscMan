@@ -32,25 +32,8 @@ function checkLibrary() {
       return index == self.indexOf(elem);
     });
     displayMusic();
-
-    // sort alphabetically (timeout to make sure divs are created)
-  //   setTimeout(function(){
-  //     alphabeticallyOrderedDivs = $('#songsTab .card').sort(function (a, b) {
-  //       a = $(a).find('.title').text().toUpperCase();
-  //       b = $(b).find('.title').text().toUpperCase();
-  //       if (a<b) return -1;
-  //       if (a>b) return 1;
-  //       if (a=b) return 0;
-  //     });
-  //     console.log(alphabeticallyOrderedDivs);
-  //     $('#songsTab').html(alphabeticallyOrderedDivs);
-  //     // update index number based on new sorting
-  //     for (i=0; i<$('#songsTab .card').length; i++) {
-  //       $($('#songsTab .card')[i]).attr('id', i);
-  //     }
-  //   }, 4000);
-  // }
-}}
+  }
+}
 
 function displayMusic(){
   for (i=0; i<musicLibrary.length; i++) {
@@ -68,6 +51,22 @@ function displayMusic(){
   }
 }
 
+function sortContent(parent, criteria) {
+  alphabeticallyOrderedDivs = $('#' + parent + ' .card').sort(function (a, b) {
+    a = $(a).find('.' + criteria).text().toUpperCase();
+    b = $(b).find('.' + criteria).text().toUpperCase();
+    if (a<b) return -1;
+    if (a>b) return 1;
+    if (a=b) return 0;
+  });
+  console.log(alphabeticallyOrderedDivs);
+  $('#' + parent).html(alphabeticallyOrderedDivs);
+  // update index number based on new sorting
+  for (i=0; i<$('#' + parent + ' .card').length; i++) {
+    $($('#' + parent + ' .card')[i]).attr('id', i);
+  }
+}
+
 function showMetaData(data, index) {
   musicmetadata(data, function (err, result) {
     card = "<div class='card' id='" + index + "'> <div class='art'></div> <div class='info'> <p class='title'>Song name</p> <p class='details'>Album Name</p> </div> </div>";
@@ -76,20 +75,7 @@ function showMetaData(data, index) {
     $(card).appendTo('#songsTab').ready(function(){
       // Order items if it's the last card
       if (index == musicLibrary.length-2) {
-        console.log(index);
-        alphabeticallyOrderedDivs = $('#songsTab .card').sort(function (a, b) {
-          a = $(a).find('.title').text().toUpperCase();
-          b = $(b).find('.title').text().toUpperCase();
-          if (a<b) return -1;
-          if (a>b) return 1;
-          if (a=b) return 0;
-        });
-        console.log(alphabeticallyOrderedDivs);
-        $('#songsTab').html(alphabeticallyOrderedDivs);
-        // update index number based on new sorting
-        for (i=0; i<$('#songsTab .card').length; i++) {
-          $($('#songsTab .card')[i]).attr('id', i);
-        }
+        sortContent('songsTab', 'title')
       }
     });
     $('#songsTab #' + index + ' .title').html(result.title); // song name
