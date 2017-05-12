@@ -34,23 +34,23 @@ function checkLibrary() {
     displayMusic();
 
     // sort alphabetically (timeout to make sure divs are created)
-    setTimeout(function(){
-      alphabeticallyOrderedDivs = $('#songsTab .card').sort(function (a, b) {
-        a = $(a).find('.title').text().toUpperCase();
-        b = $(b).find('.title').text().toUpperCase();
-        if (a<b) return -1;
-        if (a>b) return 1;
-        if (a=b) return 0;
-      });
-      console.log(alphabeticallyOrderedDivs);
-      $('#songsTab').html(alphabeticallyOrderedDivs);
-      // update index number based on new sorting
-      for (i=0; i<$('#songsTab .card').length; i++) {
-        $($('#songsTab .card')[i]).attr('id', i);
-      }
-    }, 3000);
-  }
-}
+  //   setTimeout(function(){
+  //     alphabeticallyOrderedDivs = $('#songsTab .card').sort(function (a, b) {
+  //       a = $(a).find('.title').text().toUpperCase();
+  //       b = $(b).find('.title').text().toUpperCase();
+  //       if (a<b) return -1;
+  //       if (a>b) return 1;
+  //       if (a=b) return 0;
+  //     });
+  //     console.log(alphabeticallyOrderedDivs);
+  //     $('#songsTab').html(alphabeticallyOrderedDivs);
+  //     // update index number based on new sorting
+  //     for (i=0; i<$('#songsTab .card').length; i++) {
+  //       $($('#songsTab .card')[i]).attr('id', i);
+  //     }
+  //   }, 4000);
+  // }
+}}
 
 function displayMusic(){
   for (i=0; i<musicLibrary.length; i++) {
@@ -73,7 +73,25 @@ function showMetaData(data, index) {
     card = "<div class='card' id='" + index + "'> <div class='art'></div> <div class='info'> <p class='title'>Song name</p> <p class='details'>Album Name</p> </div> </div>";
     if (err) throw err;
     // create song card and show details
-    $('#songsTab').append(card);
+    $(card).appendTo('#songsTab').ready(function(){
+      // Order items if it's the last card
+      if (index == musicLibrary.length-2) {
+        console.log(index);
+        alphabeticallyOrderedDivs = $('#songsTab .card').sort(function (a, b) {
+          a = $(a).find('.title').text().toUpperCase();
+          b = $(b).find('.title').text().toUpperCase();
+          if (a<b) return -1;
+          if (a>b) return 1;
+          if (a=b) return 0;
+        });
+        console.log(alphabeticallyOrderedDivs);
+        $('#songsTab').html(alphabeticallyOrderedDivs);
+        // update index number based on new sorting
+        for (i=0; i<$('#songsTab .card').length; i++) {
+          $($('#songsTab .card')[i]).attr('id', i);
+        }
+      }
+    });
     $('#songsTab #' + index + ' .title').html(result.title); // song name
     $('#songsTab #' + index + ' .details').html(result.artist[0]); // artist
     if (result.picture.length > 0) {
@@ -192,11 +210,21 @@ function playOrPause() {
 }
 
 function previousSong() {
+  // Only allow if current song is not the first one
+  if (playingCardIndex > 0)
   playingCardIndex--;
   playMusic(musicLibrary[playingCardIndex], playingCardIndex);
 }
 
 function nextSong() {
-  playingCardIndex++;
-  playMusic(musicLibrary[playingCardIndex], playingCardIndex);
+  // Only allow if current song is not the last one
+  if (playingCardIndex < musicLibrary.length-1) {
+    playingCardIndex++;
+    playMusic(musicLibrary[playingCardIndex], playingCardIndex);
+  }
 }
+
+// TODO: fix bug when playNext on last song
+// TODO: Save HTML in localStorage
+// TODO: Album and Artist tabs
+// TODO: Dark Theme
