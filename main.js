@@ -12,7 +12,7 @@ function createWindow () {
     defaultWidth: 330,
     defaultHeight: 500
   })
-  // Create the browser window.
+  // Create the browser window
   win = new BrowserWindow({
     x: mainWindowState.x,
     y: mainWindowState.y,

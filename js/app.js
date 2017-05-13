@@ -4,7 +4,7 @@ dialog = remote.dialog,
 musicLibrary = localStorage.getItem('musicLibrary'),
 card, playingCardIndex,
 audio = $('.player audio'),
-alphabeticallyOrderedDivs;
+orderedDivs;
 
 // ipcRenderer.on('global-shortcut', function (arg) {
 //     if (arg == 'next') {
@@ -31,40 +31,65 @@ function checkLibrary() {
     musicLibrary = musicLibrary.filter(function(elem, index, self) {
       return index == self.indexOf(elem);
     });
+    localStorage.setItem("musicLibrary", JSON.stringify(musicLibrary));
     displayMusic();
   }
 }
 
 function displayMusic(){
+  // initialize cards to prevent duplicates
+  $('#songsTab').html('');
+  counter = 0;
   for (i=0; i<musicLibrary.length; i++) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = "arraybuffer";
     xhr.open("get", musicLibrary[i], true);
+    counter++;
     let j = i; // avoid closure problem where only last iteration is executed
     xhr.onload = function(e) {
-      //console.log(e.target.response);
       showMetaData(e.target.response, j);
       //displayMusic(i);
     }
     xhr.send();
-    console.log('yolo');
   }
+  console.log('should be after');
 }
 
 function sortContent(parent, criteria) {
-  alphabeticallyOrderedDivs = $('#' + parent + ' .card').sort(function (a, b) {
+  orderedDivs = $('#' + parent + ' .card').sort(function (a, b) {
     a = $(a).find('.' + criteria).text().toUpperCase();
     b = $(b).find('.' + criteria).text().toUpperCase();
     if (a<b) return -1;
     if (a>b) return 1;
     if (a=b) return 0;
   });
-  console.log(alphabeticallyOrderedDivs);
-  $('#' + parent).html(alphabeticallyOrderedDivs);
+  $('#' + parent).html(orderedDivs);
   // update index number based on new sorting
-  for (i=0; i<$('#' + parent + ' .card').length; i++) {
-    $($('#' + parent + ' .card')[i]).attr('id', i);
+  updateIndexes(parent);
+  updateLibrary(parent);
+}
+
+function updateIndexes(parent) {
+  for (k=0; k<$('#' + parent + ' .card').length; k++) {
+    $($('#' + parent + ' .card')[k]).attr('id', k);
   }
+}
+
+function updateLibrary(parent) {
+  var newMusicLibrary = new Array();
+  // check matches between song titles and filenames
+  // to update musicLibrary based on the new sorted divs order
+  for (l=0; l < $('#' + parent + ' .card').length; l++) {
+    var title = $($($('#' + parent + ' .card')[l]).find('.title')[0]).text();
+    for (m=0; m<musicLibrary.length; m++) {
+      if (musicLibrary[m].includes(title)) {
+        //console.log('match');
+        newMusicLibrary[l] = musicLibrary[m];
+      }
+    }
+  }
+  musicLibrary = newMusicLibrary;
+  localStorage.setItem("musicLibrary", JSON.stringify(musicLibrary));
 }
 
 function showMetaData(data, index) {
@@ -74,8 +99,9 @@ function showMetaData(data, index) {
     // create song card and show details
     $(card).appendTo('#songsTab').ready(function(){
       // Order items if it's the last card
-      if (index == musicLibrary.length-2) {
-        sortContent('songsTab', 'title')
+      if (index == musicLibrary.length-1) {
+        console.log('lastie');
+        sortContent('songsTab', 'title');
       }
     });
     $('#songsTab #' + index + ' .title').html(result.title); // song name
@@ -209,6 +235,10 @@ function nextSong() {
     playMusic(musicLibrary[playingCardIndex], playingCardIndex);
   }
 }
+
+// BUG: drag n drop only works second timeControl
+// BUG: audio index not matching playing file
+// BUG: duplicate song divs
 
 // TODO: Save HTML in localStorage
 // TODO: Album and Artist tabs

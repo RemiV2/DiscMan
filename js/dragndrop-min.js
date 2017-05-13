@@ -29,9 +29,16 @@ function traverseFileTree(item, path) {
   if (item.isFile) {
     // Get file
     item.file(function(file) {
+      // Only accept audio files
       if (file.type.substring(0,5) == 'audio') {
         musicLibrary = JSON.parse(localStorage.getItem('musicLibrary'));
         musicLibrary.push(file.path);
+        // delete duplicates
+        musicLibrary = musicLibrary.filter(function(elem, index, self) {
+          return index == self.indexOf(elem);
+        });
+        // delete null items
+        musicLibrary = musicLibrary.filter(function(e){return e});
         localStorage.setItem("musicLibrary", JSON.stringify(musicLibrary));
       }
     });
@@ -45,5 +52,3 @@ function traverseFileTree(item, path) {
     });
   }
 }
-
-
