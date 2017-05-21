@@ -12,7 +12,7 @@ orderedDivs;
 //     }
 // });
 
-if (musicLibrary === null) {
+if (musicLibrary == null) {
   // if user has no music
   musicLibrary = new Array();
   localStorage.setItem("musicLibrary", JSON.stringify(musicLibrary));
@@ -24,9 +24,12 @@ if (musicLibrary === null) {
 function checkLibrary() {
   musicLibrary = JSON.parse(localStorage.getItem('musicLibrary'));
   if (musicLibrary.length > 0) {
+    console.log('check');
     // get rid of 'first start' page
     $('.firstStart').hide();
     $('.content').show();
+    // delete null items
+    musicLibrary = musicLibrary.filter(function(e){return e});
     // delete duplicates
     musicLibrary = musicLibrary.filter(function(elem, index, self) {
       return index == self.indexOf(elem);
@@ -39,57 +42,20 @@ function checkLibrary() {
 function displayMusic(){
   // initialize cards to prevent duplicates
   $('#songsTab').html('');
-  counter = 0;
   for (i=0; i<musicLibrary.length; i++) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = "arraybuffer";
     xhr.open("get", musicLibrary[i], true);
-    counter++;
     let j = i; // avoid closure problem where only last iteration is executed
-    xhr.onload = function(e) {
-      showMetaData(e.target.response, j);
-      //displayMusic(i);
-    }
-    xhr.send();
-  }
-  console.log('should be after');
-}
-
-function sortContent(parent, criteria) {
-  orderedDivs = $('#' + parent + ' .card').sort(function (a, b) {
-    a = $(a).find('.' + criteria).text().toUpperCase();
-    b = $(b).find('.' + criteria).text().toUpperCase();
-    if (a<b) return -1;
-    if (a>b) return 1;
-    if (a=b) return 0;
-  });
-  $('#' + parent).html(orderedDivs);
-  // update index number based on new sorting
-  updateIndexes(parent);
-  updateLibrary(parent);
-}
-
-function updateIndexes(parent) {
-  for (k=0; k<$('#' + parent + ' .card').length; k++) {
-    $($('#' + parent + ' .card')[k]).attr('id', k);
-  }
-}
-
-function updateLibrary(parent) {
-  var newMusicLibrary = new Array();
-  // check matches between song titles and filenames
-  // to update musicLibrary based on the new sorted divs order
-  for (l=0; l < $('#' + parent + ' .card').length; l++) {
-    var title = $($($('#' + parent + ' .card')[l]).find('.title')[0]).text();
-    for (m=0; m<musicLibrary.length; m++) {
-      if (musicLibrary[m].includes(title)) {
-        //console.log('match');
-        newMusicLibrary[l] = musicLibrary[m];
+    // prevent bugs if song is undefined
+    if (musicLibrary[j] != null && musicLibrary[j] != undefined) {
+      xhr.onload = function(e) {
+        showMetaData(e.target.response, j);
+        //displayMusic(i);
       }
+      xhr.send();
     }
   }
-  musicLibrary = newMusicLibrary;
-  localStorage.setItem("musicLibrary", JSON.stringify(musicLibrary));
 }
 
 function showMetaData(data, index) {
@@ -97,10 +63,12 @@ function showMetaData(data, index) {
     card = "<div class='card' id='" + index + "'> <div class='art'></div> <div class='info'> <p class='title'>Song name</p> <p class='details'>Album Name</p> </div> </div>";
     if (err) throw err;
     // create song card and show details
+    let z = index;
     $(card).appendTo('#songsTab').ready(function(){
-      // Order items if it's the last card
-      if (index == musicLibrary.length-1) {
-        console.log('lastie');
+      // Order items only if it's the last card
+      if (z == musicLibrary.length-1) {
+        console.log('order 66');
+        console.log(musicLibrary);
         sortContent('songsTab', 'title');
       }
     });
@@ -116,6 +84,47 @@ function showMetaData(data, index) {
       });
     }
   });
+}
+
+function sortContent(parent, criteria) {
+  orderedDivs = $('#' + parent + ' .card').sort(function (a, b) {
+    a = $(a).find('.' + criteria).text().toUpperCase();
+    b = $(b).find('.' + criteria).text().toUpperCase();
+    if (a<b) return -1;
+    if (a>b) return 1;
+    if (a=b) return 0;
+  });
+  $('#' + parent).html(orderedDivs);
+  // update index number based on new sorting
+  updateIndexes(parent);
+  setTimeout(function(){
+    updateLibrary(parent, criteria);
+  }, 10000);
+  //updateLibrary(parent);
+}
+
+function updateIndexes(parent) {
+  for (k=0; k<$('#' + parent + ' .card').length; k++) {
+    $($('#' + parent + ' .card')[k]).attr('id', k);
+  }
+}
+
+function updateLibrary(parent, criteria) {
+  var newMusicLibrary = new Array();
+  // check matches between song titles and filenames
+  // to update musicLibrary based on the new sorted divs order
+  for (l=0; l < $('#' + parent + ' .card').length; l++) {
+    var title = $($($('#' + parent + ' .card')[l]).find('.' + criteria)[0]).text();
+    for (m=0; m<musicLibrary.length; m++) {
+      if (musicLibrary[m].includes(title)) {
+        //console.log('match');
+        newMusicLibrary[l] = musicLibrary[m];
+      }
+    }
+  }
+  console.log(newMusicLibrary);
+  musicLibrary = newMusicLibrary;
+  localStorage.setItem("musicLibrary", JSON.stringify(musicLibrary));
 }
 
 function playMusic(source, index) {

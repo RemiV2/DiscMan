@@ -17,28 +17,26 @@ document.ondrop = (event) => {
   for (var i=0; i<items.length; i++) {
     var item = items[i].webkitGetAsEntry();
     if (item) {
-      traverseFileTree(item);
+      traverseFileTree(item, items.length, i);
     }
   }
-  checkLibrary();
+  setTimeout(checkLibrary, 1000);
   return false;
 }
 
-function traverseFileTree(item, path) {
+function traverseFileTree(item, path, length, i) {
   path = path || "";
   if (item.isFile) {
     // Get file
     item.file(function(file) {
       // Only accept audio files
-      if (file.type.substring(0,5) == 'audio') {
+      if (file.type.substring(0,5) == 'audio' && file != null && file != undefined) {
         musicLibrary = JSON.parse(localStorage.getItem('musicLibrary'));
+        if (musicLibrary == null) {
+          musicLibrary = new Array();
+        }
         musicLibrary.push(file.path);
-        // delete duplicates
-        musicLibrary = musicLibrary.filter(function(elem, index, self) {
-          return index == self.indexOf(elem);
-        });
-        // delete null items
-        musicLibrary = musicLibrary.filter(function(e){return e});
+        // save updated library
         localStorage.setItem("musicLibrary", JSON.stringify(musicLibrary));
       }
     });
