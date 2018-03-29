@@ -10,7 +10,7 @@ let win
 function createWindow () {
   let mainWindowState = windowStateKeeper({
     defaultWidth: 330,
-    defaultHeight: 500
+    defaultHeight: 560
   })
   // Create the browser window
   win = new BrowserWindow({
@@ -18,7 +18,8 @@ function createWindow () {
     y: mainWindowState.y,
     width: mainWindowState.width,
     height: mainWindowState.height,
-    titleBarStyle: 'hidden-inset',
+    titleBarStyle: 'hiddenInset',
+    transparent: true,
     vibrancy: 'medium-light',
     //vibrancy: 'dark',
     icon: __dirname + '/images/icon.ico',

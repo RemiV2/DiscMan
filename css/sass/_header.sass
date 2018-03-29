@@ -12,6 +12,7 @@ header
   ul.centeredPills
     display: flex
     justify-content: space-around
+    margin-top: 14px
 
     li.active a
       padding: 7px 20px
@@ -19,7 +20,6 @@ header
 
     li
       background: rgba(243, 243, 243, 0)
-      border-radius: 3px
       box-sizing: border-box
       -webkit-app-region: no-drag
       margin-top: 4px
@@ -32,9 +32,11 @@ header
         padding: 7px 20px
         font-size: 13px
         text-transform: uppercase
+        text-decoration: none
         cursor: default
         color: $primaryText
         transition-duration: .2s
+        border-radius: 5px
         &:hover
           background: rgba(243, 243, 243, 0.3)
           padding: 7px 20px
@@ -42,12 +44,12 @@ header
     li.active
       background: $primaryBackground
       color: $primaryText
-      border: .5px solid lighten($primaryBackground, .2)
 
       // Override bootstrap default styles
       a
         background: $primaryBackground
         color: $primaryText
+        border: .5px solid lighten($primaryBackground, .2)
         &:focus, &:hover
           background: $primaryBackground
           color: $primaryText

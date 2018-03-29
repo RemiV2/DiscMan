@@ -1,3 +1,33 @@
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  box-sizing: border-box; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after, q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
 header {
   padding: 10px;
   background-image: linear-gradient(-180deg, rgba(237, 234, 237, 0.45) 0%, rgba(223, 219, 223, 0.45) 100%);
@@ -6,17 +36,16 @@ header {
   height: 82px; }
   header #appTitle {
     text-align: center;
-    font-size: 14px;
-    color: orange; }
+    font-size: 14px; }
   header ul.centeredPills {
     display: flex;
-    justify-content: space-around; }
+    justify-content: space-around;
+    margin-top: 14px; }
     header ul.centeredPills li.active a {
       padding: 7px 20px;
       font-size: 13px; }
     header ul.centeredPills li {
       background: rgba(243, 243, 243, 0);
-      border-radius: 3px;
       box-sizing: border-box;
       -webkit-app-region: no-drag;
       margin-top: 4px; }
@@ -28,19 +57,21 @@ header {
         padding: 7px 20px;
         font-size: 13px;
         text-transform: uppercase;
+        text-decoration: none;
         cursor: default;
         color: #333;
-        transition-duration: .2s; }
+        transition-duration: .2s;
+        border-radius: 5px; }
         header ul.centeredPills li a:hover {
           background: rgba(243, 243, 243, 0.3);
           padding: 7px 20px; }
     header ul.centeredPills li.active {
       background: #f3f3f3;
-      color: #333;
-      border: 0.5px solid #f4f4f4; }
+      color: #333; }
       header ul.centeredPills li.active a {
         background: #f3f3f3;
-        color: #333; }
+        color: #333;
+        border: 0.5px solid #f4f4f4; }
         header ul.centeredPills li.active a:focus, header ul.centeredPills li.active a:hover {
           background: #f3f3f3;
           color: #333; }
