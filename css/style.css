@@ -1,19 +1,16 @@
 header {
   padding: 10px;
-  background-image: -webkit-linear-gradient(top, rgba(237, 234, 237, 0.45) 0%, rgba(223, 219, 223, 0.45) 100%);
   background-image: linear-gradient(-180deg, rgba(237, 234, 237, 0.45) 0%, rgba(223, 219, 223, 0.45) 100%);
   -webkit-app-region: drag;
   border-bottom: 1px solid #cdcdcd;
   height: 82px; }
   header #appTitle {
     text-align: center;
-    font-size: 14px; }
+    font-size: 14px;
+    color: orange; }
   header ul.centeredPills {
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -ms-flex-pack: distribute;
-        justify-content: space-around; }
+    justify-content: space-around; }
     header ul.centeredPills li.active a {
       padding: 7px 20px;
       font-size: 13px; }
@@ -33,8 +30,7 @@ header {
         text-transform: uppercase;
         cursor: default;
         color: #333;
-        -webkit-transition-duration: .2s;
-                transition-duration: .2s; }
+        transition-duration: .2s; }
         header ul.centeredPills li a:hover {
           background: rgba(243, 243, 243, 0.3);
           padding: 7px 20px; }
@@ -52,17 +48,10 @@ header {
 .firstStart {
   text-align: center;
   height: calc(100vh - 79px);
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   padding: 10px 50px;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  flex-direction: column;
+  justify-content: center;
   z-index: 100;
   position: fixed;
   bottom: 0;
@@ -82,16 +71,10 @@ header {
   width: 100%;
   position: fixed;
   bottom: -86px;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  flex-direction: row;
+  justify-content: space-between;
   padding: 10px 10px 10px 0;
   color: #333;
-  background-image: -webkit-linear-gradient(top, rgba(235, 234, 237, 0.45) 0%, rgba(223, 219, 223, 0.45) 100%);
   background-image: linear-gradient(-180deg, rgba(235, 234, 237, 0.45) 0%, rgba(223, 219, 223, 0.45) 100%);
   display: none; }
   .player #timeControl {
@@ -115,20 +98,11 @@ header {
     min-width: 62px;
     border-radius: 2px; }
   .player .data {
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-flex: 1;
-        -ms-flex: 1;
-            flex: 1;
+    flex: 1;
     margin: 0 6px;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
-    -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
+    flex-direction: column;
+    justify-content: space-between;
     min-width: 0; }
     .player .data .title {
       margin-bottom: 6px;
@@ -142,22 +116,12 @@ header {
       overflow: hidden;
       text-overflow: ellipsis; }
     .player .data .mediaControls {
-      display: -webkit-box;
-      display: -ms-flexbox;
       display: flex;
-      -webkit-box-orient: horizontal;
-      -webkit-box-direction: normal;
-          -ms-flex-direction: row;
-              flex-direction: row;
-      -webkit-box-pack: justify;
-          -ms-flex-pack: justify;
-              justify-content: space-between;
-      -ms-flex-wrap: wrap;
-          flex-wrap: wrap;
+      flex-direction: row;
+      justify-content: space-between;
+      flex-wrap: wrap;
       width: 100px;
-      -webkit-box-flex: 1;
-          -ms-flex: 1;
-              flex: 1;
+      flex: 1;
       height: 25px; }
       .player .data .mediaControls div {
         width: 25px;
@@ -175,29 +139,20 @@ header {
         background: url(../images/next_light.png);
         background-size: cover; }
   .player .volume {
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
-    -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between; }
+    flex-direction: column;
+    justify-content: space-between; }
     .player .volume input {
       -webkit-appearance: slider-vertical;
       height: 80px;
-      -ms-flex-item-align: end;
-          align-self: flex-end;
+      align-self: flex-end;
       width: 20px; }
     .player .volume div {
       width: 25px;
       height: 25px;
       background: url(../images/soundon_light.png);
       background-size: cover;
-      -ms-flex-item-align: end;
-          align-self: flex-end;
+      align-self: flex-end;
       width: 20px;
       margin-bottom: 3px; }
     .player .volume div.muted {
@@ -207,16 +162,9 @@ header {
 .card {
   height: 60px;
   padding: 10px;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  flex-direction: row;
+  justify-content: space-between;
   color: #333; }
   .card:nth-child(even) {
     background: #ececec; }
@@ -228,19 +176,10 @@ header {
     border-right: 3px;
     margin-right: 10px; }
   .card .info {
-    -webkit-box-flex: 1;
-        -ms-flex: 1;
-            flex: 1;
-    display: -webkit-box;
-    display: -ms-flexbox;
+    flex: 1;
     display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
-    -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
+    flex-direction: column;
+    justify-content: space-between;
     padding: 1px 0;
     min-width: 0; }
     .card .info p {
@@ -255,10 +194,7 @@ body {
   margin: 0;
   font: caption;
   background: rgba(243, 243, 243, 0);
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
   cursor: default;
   outline: none; }
   body .content {

@@ -1,5 +1,5 @@
 {
-  "name": "DiscMan-mdrlolibnbrniebgjmdrrenkfkfptndmrdrsterefffggaadgsdsddfkffgssffdfdmvfddfddsddds",
+  "name": "discman",
   "version": "0.1.0",
   "main": "main.js",
   "description": "A powerful & compact music player for macOS",
@@ -13,12 +13,16 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
+    "start": "LANG=en_US.UTF-8 electron ."
   },
   "author": "Rémi de Juvigny",
   "license": "CC-BY",
   "devDependencies": {
-    "electron": "^1.6.6"
+    "electron": "^1.6.6",
+    "gulp": "^3.9.1",
+    "gulp-exec": "^3.0.1",
+    "gulp-plumber": "^1.2.0",
+    "gulp-sass": "^3.2.1"
   },
   "dependencies": {
     "electron-window-state": "^4.1.1"
