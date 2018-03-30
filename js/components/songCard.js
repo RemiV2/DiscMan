@@ -1,1 +1,3 @@
-console.log('module loaded')
+export default () => {
+  console.log('module loaded')
+}

@@ -1,7 +1,7 @@
 {
   "name": "discman",
   "version": "0.1.0",
-  "private": true,
+  "main": "main.js",
   "description": "A powerful & compact music player for macOS",
   "repository": {
     "type": "git",
@@ -26,6 +26,8 @@
     "css-loader": "^0.28.11",
     "electron": "^2.0.0-beta.6",
     "electron-window-state": "^4.1.1",
+    "file-loader": "^1.1.11",
+    "image-webpack-loader": "^4.2.0",
     "node-sass": "^4.8.3",
     "sass-loader": "^6.0.7",
     "style-loader": "^0.20.3",
