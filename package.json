@@ -1,8 +1,12 @@
 {
   "name": "discman",
   "version": "0.1.0",
-  "main": "main.js",
+  "private": true,
   "description": "A powerful & compact music player for macOS",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remi2j/DiscMan.git"
+  },
   "keywords": [
     "Music",
     "player",
@@ -13,18 +17,19 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "bundle": "webpack --mode=development",
     "start": "LANG=en_US.UTF-8 electron ."
   },
   "author": "Rémi de Juvigny",
-  "license": "CC-BY",
+  "license": "MIT",
   "devDependencies": {
+    "css-loader": "^0.28.11",
     "electron": "^2.0.0-beta.6",
     "electron-window-state": "^4.1.1",
-    "gulp": "^3.9.1",
-    "gulp-babel": "^7.0.1",
-    "gulp-concat": "^2.6.1",
-    "gulp-plumber": "^1.2.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-sass": "^3.2.1"
+    "node-sass": "^4.8.3",
+    "sass-loader": "^6.0.7",
+    "style-loader": "^0.20.3",
+    "webpack": "^4.4.1",
+    "webpack-cli": "^2.0.13"
   }
 }
