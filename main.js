@@ -19,9 +19,7 @@ function createWindow () {
     width: mainWindowState.width,
     height: mainWindowState.height,
     titleBarStyle: 'hiddenInset',
-    transparent: true,
     vibrancy: 'medium-light',
-    //vibrancy: 'dark',
     icon: __dirname + '/images/icon.ico',
     show: false // until the page is fully loaded
   })

@@ -1,4 +1,4 @@
 import songCard from './components/songCard.js'
-import '../css/sass/style.sass'
+import '../sass/style.sass'
 
 songCard()

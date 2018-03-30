@@ -18,7 +18,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "bundle": "webpack --mode=development",
-    "start": "LANG=en_US.UTF-8 electron ."
+    "start": "webpack --mode=development && LANG=en_US.UTF-8 electron ."
   },
   "author": "Rémi de Juvigny",
   "license": "MIT",
