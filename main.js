@@ -27,7 +27,7 @@ function createWindow () {
 
   // and load the index.html of the app.
   win.loadURL(url.format({
-    pathname: path.join(__dirname, 'index.html'),
+    pathname: path.join(__dirname, '/pages/albums.html'),
     protocol: 'file:',
     slashes: true
   }))
@@ -51,7 +51,7 @@ function createWindow () {
   mainWindowState.manage(win)
 }
 
-
+// Update code without restarting the app
 hotReload(__dirname)
 
 // This method will be called when Electron has finished

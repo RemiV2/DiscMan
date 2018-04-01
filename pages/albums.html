@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>DiscMan</title>
+  </head>
+  <body>
+    <header>
+      <p id="appTitle">DiscMan</p>
+      <ul class="nav nav-pills centeredPills">
+        <li onmousedown="return false"><a href="#" class="songsTab">Songs</a></li>
+        <li onmousedown="return false" class="active"><a href="#" class="albumsTab">Albums</a></li>
+        <li onmousedown="return false"><a href="#" class="artistsTab">Artists</a></li>
+      </ul>
+    </header>
+    <!-- If user has no music -->
+    <div class="firstStart">
+      <h2>Almost done!</h2>
+      <p>Drag and drop your music folder here</p>
+    </div>
+    <!-- If user has music -->
+    <div class="tab-content content">
+      <section id="songsTab" class="tab-pane fade"></section>
+      <section id="albumsTab" class="tab-pane fade in active">
+        <song-card></song-card>
+      </section>
+      <section id="artistsTab" class="tab-pane fade">
+        <h3>Artists</h3>
+        <p>List</p>
+      </section>
+    </div>
+
+    <footer class="player">
+      <input id="timeControl" type="range" min="0" max="1" step="0.01" value="0"></input>
+      <audio></audio>
+      <div class="art"></div>
+      <div class="data">
+        <p class="title">Song Name</p>
+        <p class="artist">Pewdiepie</p>
+        <div class="mediaControls">
+          <div class="previous"></div>
+          <div class="playpause playing"></div>
+          <div class="next"></div>
+        </div>
+      </div>
+      <div class="volume">
+        <input id="vol-control" type="range" min="0" max="1" step="0.01" value="1"></input>
+        <div class="soundonoff"></div>
+      </div>
+    </footer>
+    <script type="text/javascript" src="../dist/bundle.js"></script>
+  </body>
+</html>
