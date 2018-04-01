@@ -1,6 +1,6 @@
 export default songData => {
   // Create placeholder data if none is available
-  const songInfo = songInfo || {
+  const songInfo = songData || {
     title: 'Unknown Title',
     details: 'Unknown Source',
     src: '#',
@@ -9,11 +9,11 @@ export default songData => {
 
   // Create a card for the song
   const songCard = document.createElement('div')
-  songCard.classList.add('.card')
+  songCard.classList.add('card')
 
   // Populate card with song data
   songCard.innerHTML = `
-    <div class="card__art" style="background: url('${songInfo.cover}')"></div>
+    <div class="card__art"></div>
     <div class="card__info">
       <audio class="card__source" src="${songInfo.src}"></audio>
       <p class="card__title">${songInfo.title}</p>
@@ -22,6 +22,5 @@ export default songData => {
   `
 
   console.log('card created')
-
   return songCard
 }
