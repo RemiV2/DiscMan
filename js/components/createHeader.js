@@ -10,7 +10,7 @@ export default activeTab => {
   // Populate header with tabs
   header.innerHTML = `
     <p id="appTitle">DiscMan</p>
-    <ul class="nav nav-pills centeredPills">
+    <ul class="centeredPills">
       <li onmousedown="return false" class="${activeTab === 'titles' ? 'active' : ''}">
         <a href="./titles.html" class="titlesTab">Titles</a>
       </li>
