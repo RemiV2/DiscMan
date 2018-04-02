@@ -14,11 +14,7 @@ header
     justify-content: space-around
     margin-top: 14px
 
-    li.active a
-      padding: 7px 20px
-      font-size: 13px
-
-    li
+    li.tab
       background: rgba(243, 243, 243, 0)
       box-sizing: border-box
       -webkit-app-region: no-drag
@@ -41,7 +37,7 @@ header
           background: rgba(243, 243, 243, 0.3)
           padding: 7px 20px
 
-    li.active
+    li.tab.active
       background: $primaryBackground
       color: $primaryText
 
@@ -50,6 +46,8 @@ header
         background: $primaryBackground
         color: $primaryText
         border: .5px solid lighten($primaryBackground, .2)
+        padding: 7px 20px
+        font-size: 13px
         &:focus, &:hover
           background: $primaryBackground
           color: $primaryText
