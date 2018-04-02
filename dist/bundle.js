@@ -147,7 +147,8 @@ module.exports = __webpack_require__.p + "09b5f7ac4d6f7292173ea15c8d2d2c6c.png";
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_createSongCard_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/createSongCard.js */ "./js/components/createSongCard.js");
-/* harmony import */ var _helpers_switchTab_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers/switchTab.js */ "./js/helpers/switchTab.js");
+/* harmony import */ var _helpers_displayContent_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers/displayContent.js */ "./js/helpers/displayContent.js");
+/* harmony import */ var _helpers_displayContent_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_helpers_displayContent_js__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _sass_style_sass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../sass/style.sass */ "./sass/style.sass");
 /* harmony import */ var _sass_style_sass__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_sass_style_sass__WEBPACK_IMPORTED_MODULE_2__);
 // const ElectronStore = require('electron-store')
@@ -155,32 +156,75 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+// import switchTab from './helpers/switchTab.js'
 
 
+// Get active tab
 let content = document.querySelector('.content.active')
-let currentTab = content.getAttribute('id')
-console.log(currentTab)
+let currentTabName = content.getAttribute('id')
 
 displayContent = () => {
-  switch (currentTab) {
+  let content = document.querySelector('.content.active')
+  let currentTab = content.getAttribute('id')
+
+  switch (currentTabName) {
     case 'titles':
       displayTitles()
       break;
-  
+
     case 'artists':
       displayArtists()
       break;
-  
+
     default:
       displayAlbums()
       break;
   }
 }
 
-for (let i = 0; i < 3; i++) {
-  const card = Object(_components_createSongCard_js__WEBPACK_IMPORTED_MODULE_0__["default"])()
-  content.appendChild(card)
+switchTab = newTab => {
+  // Only trigger if clicked tab isn't active
+  if (!document.querySelector(`li.tab.active.${newTab}`)) {
+    console.log('is new')
+  }
+  const tabs = document.querySelectorAll('tab')
+  tabs.forEach(tab => {
+    // Remove tab focus
+    if (!tab.classList.contains('newTab')) {
+      tab.classList.remove('active')
+    } else {
+      // Focus new tab
+      tab.classList.add('active')
+    }
+  })
+  // Update content
+  displayContent()
 }
+
+const displayTitles = () => {
+  console.log('display titles')
+}
+
+const displayArtists = () => {
+  console.log('display artists')
+}
+
+const displayAlbums = () => {
+  console.log('display albums')
+}
+
+const tabs = document.querySelectorAll('header li.tab')
+console.log(tabs)
+for (const tab of tabs) {
+  tab.addEventListener('click', () => {
+    switchTab(tab.getAttribute('id'))
+  })
+}
+
+// for (let i = 0; i < 3; i++) {
+//   const card = createSongCard()
+//   content.appendChild(card)
+// }
 
 /***/ }),
 
@@ -222,27 +266,32 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./js/helpers/switchTab.js":
-/*!*********************************!*\
-  !*** ./js/helpers/switchTab.js ***!
-  \*********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./js/helpers/displayContent.js":
+/*!**************************************!*\
+  !*** ./js/helpers/displayContent.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (newTab => {
-  const tabs = document.querySelectorAll('tab')
-  tabs.forEach(tab => {
-    // Remove tab focus
-    if (!tab.classList.contains('newTab')) {
-      tab.classList.remove('active')
-    } else {
-      // Focus new tab
-      tab.classList.add('active')
-    }
-  })
-});
+// Display content depending on the active tab
+displayContent = () => {
+  let content = document.querySelector('.content.active')
+  let currentTab = content.getAttribute('id')
+
+  switch (currentTabName) {
+    case 'titles':
+      displayTitles()
+      break;
+
+    case 'artists':
+      displayArtists()
+      break;
+
+    default:
+      displayAlbums()
+      break;
+  }
+}
 
 /***/ }),
 

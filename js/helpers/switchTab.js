@@ -1,4 +1,8 @@
 export default newTab => {
+  // Only trigger if clicked tab isn't active
+  if (!document.querySelector(`li.tab.active.${newTab}`)) {
+    console.log('is new')
+  }
   const tabs = document.querySelectorAll('tab')
   tabs.forEach(tab => {
     // Remove tab focus
@@ -9,4 +13,6 @@ export default newTab => {
       tab.classList.add('active')
     }
   })
+  // Update content
+  displayContent()
 }
