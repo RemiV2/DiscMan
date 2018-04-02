@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>DiscMan</title>
+  </head>
+  <body>
+    <header>
+      <p id="appTitle">DiscMan</p>
+      <ul class="centeredPills">
+        <li onmousedown="return false" class="tab">
+          <a href="#" class="tab titles">Titles</a>
+        </li>
+        <li onmousedown="return false" class="tab active">
+          <a href="#" class="tab albums">Albums</a>
+        </li>
+        <li onmousedown="return false" class="tab">
+          <a href="#" class="tab artists">Artists</a>
+        </li>
+      </ul>
+    </header>
+
+    <section id="titles" class="content">
+      <!-- Populate with songs from library -->
+    </section>
+
+    <section id="albums active" class="content">
+      <!-- Populate with albums from library -->
+    </section>
+
+    <section id="artists" class="content">
+      <!-- Populate with artists from library -->
+    </section>
+
+    <footer class="player">
+      <input id="timeControl" type="range" min="0" max="1" step="0.01" value="0"></input>
+      <audio></audio>
+      <div class="art"></div>
+      <div class="data">
+        <p class="title">${media.title}</p>
+        <p class="artist">${media.details}</p>
+        <div class="mediaControls">
+          <div class="previous"></div>
+          <div class="playpause playing"></div>
+          <div class="next"></div>
+        </div>
+      </div>
+      <div class="volume">
+        <input id="vol-control" type="range" min="0" max="1" step="0.01" value="1"></input>
+        <div class="soundonoff"></div>
+      </div>
+    </footer>
+
+    <!-- Insert player from js -->
+    <script type="text/javascript" src="./dist/bundle.js"></script>
+  </body>
+</html>

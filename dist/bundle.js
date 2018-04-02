@@ -147,10 +147,9 @@ module.exports = __webpack_require__.p + "09b5f7ac4d6f7292173ea15c8d2d2c6c.png";
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_createSongCard_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/createSongCard.js */ "./js/components/createSongCard.js");
-/* harmony import */ var _components_createHeader_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/createHeader.js */ "./js/components/createHeader.js");
-/* harmony import */ var _components_createPlayer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/createPlayer.js */ "./js/components/createPlayer.js");
-/* harmony import */ var _sass_style_sass__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../sass/style.sass */ "./sass/style.sass");
-/* harmony import */ var _sass_style_sass__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_sass_style_sass__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _helpers_switchTab_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers/switchTab.js */ "./js/helpers/switchTab.js");
+/* harmony import */ var _sass_style_sass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../sass/style.sass */ "./sass/style.sass");
+/* harmony import */ var _sass_style_sass__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_sass_style_sass__WEBPACK_IMPORTED_MODULE_2__);
 // const ElectronStore = require('electron-store')
 // const store = new ElectronStore()
 
@@ -158,111 +157,30 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-const content = document.querySelector('.content')
-const currentTab = content.getAttribute('id')
+let content = document.querySelector('.content.active')
+let currentTab = content.getAttribute('id')
 console.log(currentTab)
 
-const player = Object(_components_createPlayer_js__WEBPACK_IMPORTED_MODULE_2__["default"])()
-document.body.appendChild(player)
-
-const header = Object(_components_createHeader_js__WEBPACK_IMPORTED_MODULE_1__["default"])(currentTab)
-document.body.appendChild(header)
-
-// Populate content
+displayContent = () => {
+  switch (currentTab) {
+    case 'titles':
+      displayTitles()
+      break;
+  
+    case 'artists':
+      displayArtists()
+      break;
+  
+    default:
+      displayAlbums()
+      break;
+  }
+}
 
 for (let i = 0; i < 3; i++) {
   const card = Object(_components_createSongCard_js__WEBPACK_IMPORTED_MODULE_0__["default"])()
   content.appendChild(card)
 }
-
-/***/ }),
-
-/***/ "./js/components/createHeader.js":
-/*!***************************************!*\
-  !*** ./js/components/createHeader.js ***!
-  \***************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (activeTab => {
-  // Set albums as default tab if none if specified
-  if (activeTab !== ('titles' || 'albums' || 'artists' || 'firstStart')) {
-    activeTab = 'albums'
-  }
-
-  // Create an empty header
-  const header = document.createElement('header')
-  
-  // Populate header with tabs
-  header.innerHTML = `
-    <p id="appTitle">DiscMan</p>
-    <ul class="centeredPills">
-      <li onmousedown="return false" class="${activeTab === 'titles' ? 'active' : ''}">
-        <a href="./titles.html" class="titlesTab">Titles</a>
-      </li>
-      <li onmousedown="return false" class="${activeTab === 'albums' ? 'active' : ''}">
-        <a href="#" class="albumsTab">Albums</a>
-      </li>
-      <li onmousedown="return false" class="${activeTab === 'artists' ? 'active' : ''}">
-        <a href="./artists.html" class="artistsTab">Artists</a>
-      </li>
-    </ul>
-  `
-
-  console.log('header created')
-  return header
-});
-
-/***/ }),
-
-/***/ "./js/components/createPlayer.js":
-/*!***************************************!*\
-  !*** ./js/components/createPlayer.js ***!
-  \***************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (track => {
-  // Create placeholder data if none is available
-  const media = track || {
-    title: 'Unknown Title',
-    details: 'Unknown Source',
-    src: '#',
-    cover: 'unknown.png'
-  }
-
-  // Create an empty player
-  const player = document.createElement('footer')
-  player.classList.add('player')
-
-  // Populate player with song data
-  player.innerHTML = `
-    <input id="timeControl" type="range" min="0" max="1" step="0.01" value="0"></input>
-    <audio></audio>
-    <div class="art"></div>
-    <div class="data">
-      <p class="title">${media.title}</p>
-      <p class="artist">${media.details}</p>
-      <div class="mediaControls">
-        <div class="previous"></div>
-        <div class="playpause playing"></div>
-        <div class="next"></div>
-      </div>
-    </div>
-    <div class="volume">
-      <input id="vol-control" type="range" min="0" max="1" step="0.01" value="1"></input>
-      <div class="soundonoff"></div>
-    </div>
-  `
-
-  console.log('player created')
-  return player
-});
 
 /***/ }),
 
@@ -300,6 +218,30 @@ __webpack_require__.r(__webpack_exports__);
 
   console.log('card created')
   return songCard
+});
+
+/***/ }),
+
+/***/ "./js/helpers/switchTab.js":
+/*!*********************************!*\
+  !*** ./js/helpers/switchTab.js ***!
+  \*********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (newTab => {
+  const tabs = document.querySelectorAll('tab')
+  tabs.forEach(tab => {
+    // Remove tab focus
+    if (!tab.classList.contains('newTab')) {
+      tab.classList.remove('active')
+    } else {
+      // Focus new tab
+      tab.classList.add('active')
+    }
+  })
 });
 
 /***/ }),
