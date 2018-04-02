@@ -15,7 +15,6 @@ import '../sass/style.sass'
 for (const tab of tabs) {
   console.log(tab)
   tab.addEventListener('click', () => {
-    console.log('click')
     switchTab(tab.getAttribute('id'))
   })
 }

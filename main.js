@@ -13,6 +13,7 @@ function createWindow () {
     defaultWidth: 330,
     defaultHeight: 560
   })
+
   // Create the browser window
   win = new BrowserWindow({
     x: mainWindowState.x,
@@ -25,7 +26,7 @@ function createWindow () {
     show: false // until the page is fully loaded
   })
 
-  // and load the index.html of the app.
+  // Load the index.html of the app.
   win.loadURL(url.format({
     pathname: path.join(__dirname, './index.html'),
     protocol: 'file:',
