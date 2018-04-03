@@ -20,11 +20,13 @@ export default () => {
     const card = createCard()
     titlesSection.appendChild(card)
   }
+  
   // Display albums
   for (let i = 0; i < 20; i++) {
     const card = createCard()
     albumsSection.appendChild(card)
   }
+
   // Display artists
   for (let i = 0; i < 20; i++) {
     const card = createCard()

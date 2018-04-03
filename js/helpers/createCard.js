@@ -19,8 +19,7 @@ export default songData => {
       <p class="card__title">${songInfo.title}</p>
       <p class="card__details">${songInfo.details}</p>
     </div>
-  `
+    `
 
-  console.log('card created')
-  return songCard
+    return songCard
 }
