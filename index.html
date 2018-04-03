@@ -21,17 +21,24 @@
       </ul>
     </header>
 
-    <section data-section="titles" class="content">
-      <!-- Populate with songs from library -->
-    </section>
+    <!-- If user has no music -->
+    <div class="firstStart">
+      <h2>Almost done!</h2>
+      <p>Drag and drop your music folder here</p>
+    </div>
 
-    <section data-section="albums" class="content active">
-      <!-- Populate with albums from library -->
-    </section>
-
-    <section data-section="artists" class="content">
-      <!-- Populate with artists from library -->
-    </section>
+    <!-- If user has music -->
+    <main>
+      <section data-section="titles" class="content">
+        <!-- Populate with songs from library -->
+      </section>
+      <section data-section="albums" class="content active">
+        <!-- Populate with albums from library -->
+      </section>
+      <section data-section="artists" class="content">
+        <!-- Populate with artists from library -->
+      </section>
+    </main>
 
     <footer class="player">
       <input id="timeControl" type="range" min="0" max="1" step="0.01" value="0"></input>
