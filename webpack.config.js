@@ -11,17 +11,7 @@ module.exports = {
     rules: [
       {
         test: /\.sass$/,
-        use: [{
-          loader: 'style-loader'
-        }, {
-          loader: 'css-loader', options: {
-            sourceMap: true
-          }
-        }, {
-          loader: 'sass-loader', options: {
-            sourceMap: true
-          }
-        }]
+        use: ['style-loader', 'css-loader', 'sass-loader']
       }, {
         test: /\.(gif|png|jpe?g|svg)$/i,
         use: [
