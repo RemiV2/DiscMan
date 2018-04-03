@@ -1,3 +1,6 @@
+const fs = require('fs')
+const mime = require('mime-types')
+
 import parseFiles from './parseFiles.js'
 
 export default () => {
@@ -21,68 +24,33 @@ export default () => {
   document.addEventListener('drop', e => {
     firstStart.classList.remove('dragged-over')
     e.preventDefault()
-    const items = e.dataTransfer.items
-    for (let i=0; i<items.length; i++) {
-      var item = items[i].webkitGetAsEntry()
-      if (item) {
-        traverseFileTree(item)
-          .then(path => {
-            newMusicPaths.push(path)
-            console.table(newMusicPaths)
-            if (item === items[items.length-1]) {
-              console.log('finished')
-              //console.table(newMusicPaths)
-            }
-          })
-
-      }
+    const rootFiles = e.dataTransfer.files
+    for (const rootFile of rootFiles) {
+      newMusicPaths = crawlDirectory(rootFile.path, newMusicPaths)
     }
-    
-    //const newMusic = parseFiles(newMusicPaths)
-    // parseFiles(newMusicPaths)
+    console.table(newMusicPaths)
+    console.log('should be last')
   })
 
-  const traverseFileTree = (item, path) => {
-    return new Promise(resolve => {
-      path = path || ""
-      if (item.isFile) {
-        // Get file
-        item.file(file => {
-          if (file.type.substring(0, 5) == 'audio') {
-            //newMusicPaths.push(file.path)
-            console.log(file.path)
-            resolve(file.path)
-          }
-        })
-      } else if (item.isDirectory) {
-        // Get folder contents
-        const dirReader = item.createReader()
-        dirReader.readEntries(function (entries) {
-          for (var i = 0; i < entries.length; i++) {
-            traverseFileTree(entries[i], path + item.name + "/")
-          }
-        })
+  const crawlDirectory = (directory, fileList) => {
+    directory += '/'
+    const files = fs.readdirSync(directory)
+    fileList = fileList || []
+
+    // Parse directory content
+    files.forEach(function (file) {
+      if (fs.statSync(directory + file).isDirectory()) {
+        fileList = crawlDirectory(directory + file + '/', fileList)
+      }
+      else {
+        // Only save if it's a supported audio file
+        const type = mime.lookup(file).toString()
+        if (type.substring(0, 5) === 'audio' && !type.includes('x-mpegurl')) {
+          fileList.push(file)
+          console.log(type)
+        }
       }
     })
+    return fileList;
   }
-  
-  // const traverseFileTree = (item, path) => {
-  //   path = path || ""
-  //   if (item.isFile) {
-  //     // Get file
-  //     item.file(file => {
-  //       if (file.type.substring(0, 5) == 'audio') {
-  //         newMusicPaths.push(file.path)
-  //       }
-  //     })
-  //   } else if (item.isDirectory) {
-  //     // Get folder contents
-  //     const dirReader = item.createReader()
-  //     dirReader.readEntries(function (entries) {
-  //       for (var i = 0; i < entries.length; i++) {
-  //         traverseFileTree(entries[i], path + item.name + "/")
-  //       }
-  //     })
-  //   }
-  // }
 }
