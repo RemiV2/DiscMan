@@ -336,23 +336,18 @@ const store = new ElectronStore()
 const library = store.get('library') || []
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  add: fileList => {
+  add: async fileList => {
     for (const file of fileList) {
-      mm.parseFile(file, {native: true})
-        .then(metadata => {
-          const fileData = {
-            title: metadata.common.title,
-            album: metadata.common.album,
-            artist: metadata.common.artist,
-            picture: metadata.common.picture,
-            track: metadata.common.track
-          }
-          //fileData.title = metadata.title
-          library.push(fileData)
-          console.log('f')
-        })
+      const metadata = await mm.parseFile(file, {native: true})
+      const fileData = {
+        title: metadata.common.title,
+        album: metadata.common.album,
+        artist: metadata.common.artist,
+        picture: metadata.common.picture,
+        track: metadata.common.track
+      }
+      library.push(fileData)
     }
-    console.log('last')
   }
 });
 
