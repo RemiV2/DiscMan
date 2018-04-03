@@ -226,9 +226,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = (() => {
-  console.log('test')
   const firstStart = document.querySelector('.first-start')
-  let newMusicPaths = []
+  let newMusicPaths
   
   document.addEventListener('dragover', e => {
     // Prevent app from opening file
@@ -236,6 +235,8 @@ __webpack_require__.r(__webpack_exports__);
     console.log('dragover')
     firstStart.classList.add('active')
     firstStart.classList.add('dragged-over')
+    // Reset new musics
+    newMusicPaths = []
   })
   
   document.addEventListener('dragleave', e => {
@@ -246,40 +247,68 @@ __webpack_require__.r(__webpack_exports__);
   document.addEventListener('drop', e => {
     firstStart.classList.remove('dragged-over')
     e.preventDefault()
-    newMusicPaths = []
     const items = e.dataTransfer.items
     for (let i=0; i<items.length; i++) {
       var item = items[i].webkitGetAsEntry()
       if (item) {
+        console.log(traverseFileTree(item))
         traverseFileTree(item)
+          .then(path => {
+            newMusicPaths.push(path)
+            console.table(newMusicPaths)
+            if (item === items[items.length-1]) {
+              console.table(newMusicPaths)
+            }
+          })
       }
     }
     
-    console.table(newMusicPaths)
     //const newMusic = parseFiles(newMusicPaths)
-    Object(_parseFiles_js__WEBPACK_IMPORTED_MODULE_0__["default"])(newMusicPaths)
+    // parseFiles(newMusicPaths)
   })
 
-
   const traverseFileTree = (item, path) => {
-    path = path || ""
-    if (item.isFile) {
-      // Get file
-      item.file(file => {
-        if (file.type.substring(0, 5) == 'audio') {
-          newMusicPaths.push(file.path)
-        }
-      })
-    } else if (item.isDirectory) {
-      // Get folder contents
-      const dirReader = item.createReader()
-      dirReader.readEntries(function (entries) {
-        for (var i = 0; i < entries.length; i++) {
-          traverseFileTree(entries[i], path + item.name + "/")
-        }
-      })
-    }
+    return new Promise(resolve => {
+      path = path || ""
+      if (item.isFile) {
+        // Get file
+        item.file(file => {
+          if (file.type.substring(0, 5) == 'audio') {
+            //newMusicPaths.push(file.path)
+            console.log('im here, ' + file.path)
+            resolve(file.path)
+          }
+        })
+      } else if (item.isDirectory) {
+        // Get folder contents
+        const dirReader = item.createReader()
+        dirReader.readEntries(function (entries) {
+          for (var i = 0; i < entries.length; i++) {
+            traverseFileTree(entries[i], path + item.name + "/")
+          }
+        })
+      }
+    })
   }
+  // const traverseFileTree = (item, path) => {
+  //   path = path || ""
+  //   if (item.isFile) {
+  //     // Get file
+  //     item.file(file => {
+  //       if (file.type.substring(0, 5) == 'audio') {
+  //         newMusicPaths.push(file.path)
+  //       }
+  //     })
+  //   } else if (item.isDirectory) {
+  //     // Get folder contents
+  //     const dirReader = item.createReader()
+  //     dirReader.readEntries(function (entries) {
+  //       for (var i = 0; i < entries.length; i++) {
+  //         traverseFileTree(entries[i], path + item.name + "/")
+  //       }
+  //     })
+  //   }
+  // }
 });
 
 /***/ }),
