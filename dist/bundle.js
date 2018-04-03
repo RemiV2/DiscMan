@@ -272,8 +272,7 @@ const mime = __webpack_require__(/*! mime-types */ "./node_modules/mime-types/in
         // Only save if it's a supported audio file
         const type = mime.lookup(file).toString()
         if (type.substring(0, 5) === 'audio' && !type.includes('x-mpegurl')) {
-          fileList.push(file)
-          console.log(file)
+          fileList.push(directory + file)
         }
       }
     })
@@ -333,16 +332,27 @@ const mm = __webpack_require__(/*! music-metadata */ "./node_modules/music-metad
 const ElectronStore = __webpack_require__(/*! electron-store */ "./node_modules/electron-store/index.js")
 const store = new ElectronStore()
 
+// Get current library or create new one
+const library = store.get('library') || []
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   add: fileList => {
     for (const file of fileList) {
       mm.parseFile(file, {native: true})
         .then(metadata => {
-          const fileData = {}
-          fileData.title = metadata.title
-          console.log(fileData)
+          const fileData = {
+            title: metadata.common.title,
+            album: metadata.common.album,
+            artist: metadata.common.artist,
+            picture: metadata.common.picture,
+            track: metadata.common.track
+          }
+          //fileData.title = metadata.title
+          library.push(fileData)
+          console.log('f')
         })
     }
+    console.log('last')
   }
 });
 

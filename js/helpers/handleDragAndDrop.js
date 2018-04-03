@@ -47,8 +47,7 @@ export default () => {
         // Only save if it's a supported audio file
         const type = mime.lookup(file).toString()
         if (type.substring(0, 5) === 'audio' && !type.includes('x-mpegurl')) {
-          fileList.push(file)
-          console.log(file)
+          fileList.push(directory + file)
         }
       }
     })
