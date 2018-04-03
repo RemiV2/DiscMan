@@ -1,7 +1,7 @@
 const fs = require('fs')
 const mime = require('mime-types')
 
-import parseFiles from './parseFiles.js'
+import updateLibrary from './updateLibrary.js'
 
 export default () => {
   const firstStart = document.querySelector('.first-start')
@@ -28,8 +28,9 @@ export default () => {
     for (const rootFile of rootFiles) {
       newMusicPaths = crawlDirectory(rootFile.path, newMusicPaths)
     }
-    console.table(newMusicPaths)
-    console.log('should be last')
+
+    // Add dragged music files to library
+    updateLibrary.add(newMusicPaths)
   })
 
   const crawlDirectory = (directory, fileList) => {
@@ -47,7 +48,7 @@ export default () => {
         const type = mime.lookup(file).toString()
         if (type.substring(0, 5) === 'audio' && !type.includes('x-mpegurl')) {
           fileList.push(file)
-          console.log(type)
+          console.log(file)
         }
       }
     })

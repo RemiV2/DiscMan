@@ -222,7 +222,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _parseFiles_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./parseFiles.js */ "./js/helpers/parseFiles.js");
+/* harmony import */ var _updateLibrary_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./updateLibrary.js */ "./js/helpers/updateLibrary.js");
 const fs = __webpack_require__(/*! fs */ "fs")
 const mime = __webpack_require__(/*! mime-types */ "./node_modules/mime-types/index.js")
 
@@ -253,8 +253,9 @@ const mime = __webpack_require__(/*! mime-types */ "./node_modules/mime-types/in
     for (const rootFile of rootFiles) {
       newMusicPaths = crawlDirectory(rootFile.path, newMusicPaths)
     }
-    console.table(newMusicPaths)
-    console.log('should be last')
+
+    // Add dragged music files to library
+    _updateLibrary_js__WEBPACK_IMPORTED_MODULE_0__["default"].add(newMusicPaths)
   })
 
   const crawlDirectory = (directory, fileList) => {
@@ -272,41 +273,12 @@ const mime = __webpack_require__(/*! mime-types */ "./node_modules/mime-types/in
         const type = mime.lookup(file).toString()
         if (type.substring(0, 5) === 'audio' && !type.includes('x-mpegurl')) {
           fileList.push(file)
-          console.log(type)
+          console.log(file)
         }
       }
     })
     return fileList;
   }
-});
-
-/***/ }),
-
-/***/ "./js/helpers/parseFiles.js":
-/*!**********************************!*\
-  !*** ./js/helpers/parseFiles.js ***!
-  \**********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-const metaData = __webpack_require__(/*! music-metadata */ "./node_modules/music-metadata/lib/index.js")
-
-/* harmony default export */ __webpack_exports__["default"] = (filePaths => {
-  const results = []
-  for (const path of filePaths) {
-    // Get meta data
-    metaData
-      .parseFile(path, {native: true})
-      .then(metadata => {
-        results.push(metaData)
-      })
-      .catch(err => {
-        console.error(err.message);
-      })
-  }
-  console.table(results)
 });
 
 /***/ }),
@@ -345,6 +317,34 @@ __webpack_require__.r(__webpack_exports__);
   }
 });
 
+
+/***/ }),
+
+/***/ "./js/helpers/updateLibrary.js":
+/*!*************************************!*\
+  !*** ./js/helpers/updateLibrary.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+const mm = __webpack_require__(/*! music-metadata */ "./node_modules/music-metadata/lib/index.js")
+const ElectronStore = __webpack_require__(/*! electron-store */ "./node_modules/electron-store/index.js")
+const store = new ElectronStore()
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  add: fileList => {
+    for (const file of fileList) {
+      mm.parseFile(file, {native: true})
+        .then(metadata => {
+          const fileData = {}
+          fileData.title = metadata.title
+          console.log(fileData)
+        })
+    }
+  }
+});
 
 /***/ }),
 
