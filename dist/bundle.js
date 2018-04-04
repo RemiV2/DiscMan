@@ -99,6 +99,9 @@ __webpack_require__.r(__webpack_exports__);
 const ElectronStore = __webpack_require__(/*! electron-store */ "./node_modules/electron-store/index.js")
 const store = new ElectronStore()
 
+// TODO: remove clear
+store.clear()
+
 const tabs = document.querySelectorAll('header li.tab')
 const firstStart = document.querySelector('.first-start')
 
@@ -128,24 +131,16 @@ for (const tab of tabs) {
 
 /***/ }),
 
-/***/ "./js/helpers/createCard.js":
-/*!**********************************!*\
-  !*** ./js/helpers/createCard.js ***!
-  \**********************************/
+/***/ "./js/helpers/createSongCard.js":
+/*!**************************************!*\
+  !*** ./js/helpers/createSongCard.js ***!
+  \**************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = (songData => {
-  // Create placeholder data if none is available
-  const songInfo = songData || {
-    title: 'Unknown Title',
-    details: 'Unknown Source',
-    src: '#',
-    cover: 'unknown.png'
-  }
-
   // Create a card for the song
   const songCard = document.createElement('div')
   songCard.classList.add('card')
@@ -154,13 +149,13 @@ __webpack_require__.r(__webpack_exports__);
   songCard.innerHTML = `
     <div class="card__art"></div>
     <div class="card__info">
-      <audio class="card__source" src="${songInfo.src}"></audio>
-      <p class="card__title">${songInfo.title}</p>
-      <p class="card__details">${songInfo.details}</p>
+      <audio class="card__source" src="${songData.file}"></audio>
+      <p class="card__title">${songData.title}</p>
+      <p class="card__details">${songData.artist}</p>
     </div>
     `
-
-    return songCard
+  
+  return songCard
 });
 
 /***/ }),
@@ -174,41 +169,42 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _createCard_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./createCard.js */ "./js/helpers/createCard.js");
+/* harmony import */ var _createSongCard_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./createSongCard.js */ "./js/helpers/createSongCard.js");
+const ElectronStore = __webpack_require__(/*! electron-store */ "./node_modules/electron-store/index.js")
+const store = new ElectronStore()
 
-// Display content depending on the active tab
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = (() => {
+  // Get library from storage
+  const library = store.get('library')
+
   // Get sections from DOM
+  const firstStart = document.querySelector('.first-start')
   const titlesSection = document.querySelector('.content[data-section="titles"]')
   const albumsSection = document.querySelector('.content[data-section="albums"]')
   const artistsSection = document.querySelector('.content[data-section="artists"]')
 
-  // Create fake card
-  // TODO: replace with real metadata
-  const cardInfo = {
-    title: 'Unknown Title',
-    details: 'Unknown Source',
-    src: '#',
-    cover: 'unknown.png'
-  }
-
+  // Hide first start screen
+  firstStart.classList.remove('active')
   // Display titles
-  for (let i = 0; i < 20; i++) {
-    const card = Object(_createCard_js__WEBPACK_IMPORTED_MODULE_0__["default"])()
+  for (const title of library.titles) {
+    const card = Object(_createSongCard_js__WEBPACK_IMPORTED_MODULE_0__["default"])(title)
     titlesSection.appendChild(card)
   }
   
   // Display albums
-  for (let i = 0; i < 20; i++) {
-    const card = Object(_createCard_js__WEBPACK_IMPORTED_MODULE_0__["default"])()
-    albumsSection.appendChild(card)
-  }
+  // for (let i = 0; i < 20; i++) {
+  //   const card = createCard()
+  //   albumsSection.appendChild(card)
+  // }
 
   // Display artists
-  for (let i = 0; i < 20; i++) {
-    const card = Object(_createCard_js__WEBPACK_IMPORTED_MODULE_0__["default"])()
-    artistsSection.appendChild(card)
-  }
+  // for (let i = 0; i < 20; i++) {
+  //   const card = createCard()
+  //   artistsSection.appendChild(card)
+  // }
 });
 
 /***/ }),
@@ -328,26 +324,34 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _displayContent_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./displayContent.js */ "./js/helpers/displayContent.js");
 const mm = __webpack_require__(/*! music-metadata */ "./node_modules/music-metadata/lib/index.js")
 const ElectronStore = __webpack_require__(/*! electron-store */ "./node_modules/electron-store/index.js")
 const store = new ElectronStore()
 
+
+
 // Get current library or create new one
-const library = store.get('library') || []
+const library = store.get('library') || {titles: [], albums: [], artists: []}
+
+// Render songs again everytime the library changes
+store.onDidChange('library', _displayContent_js__WEBPACK_IMPORTED_MODULE_0__["default"])
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   add: async fileList => {
     for (const file of fileList) {
       const metadata = await mm.parseFile(file, {native: true})
       const fileData = {
+        file,
         title: metadata.common.title,
         album: metadata.common.album,
         artist: metadata.common.artist,
         picture: metadata.common.picture,
         track: metadata.common.track
       }
-      library.push(fileData)
+      library.titles.push(fileData)
     }
+    store.set('library', library)
   }
 });
 

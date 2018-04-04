@@ -1,35 +1,36 @@
-import createCard from './createCard.js'
-// Display content depending on the active tab
+const ElectronStore = require('electron-store')
+const store = new ElectronStore()
+
+import createSongCard from './createSongCard.js'
+
+
 export default () => {
+  // Get library from storage
+  const library = store.get('library')
+
   // Get sections from DOM
+  const firstStart = document.querySelector('.first-start')
   const titlesSection = document.querySelector('.content[data-section="titles"]')
   const albumsSection = document.querySelector('.content[data-section="albums"]')
   const artistsSection = document.querySelector('.content[data-section="artists"]')
 
-  // Create fake card
-  // TODO: replace with real metadata
-  const cardInfo = {
-    title: 'Unknown Title',
-    details: 'Unknown Source',
-    src: '#',
-    cover: 'unknown.png'
-  }
-
+  // Hide first start screen
+  firstStart.classList.remove('active')
   // Display titles
-  for (let i = 0; i < 20; i++) {
-    const card = createCard()
+  for (const title of library.titles) {
+    const card = createSongCard(title)
     titlesSection.appendChild(card)
   }
   
   // Display albums
-  for (let i = 0; i < 20; i++) {
-    const card = createCard()
-    albumsSection.appendChild(card)
-  }
+  // for (let i = 0; i < 20; i++) {
+  //   const card = createCard()
+  //   albumsSection.appendChild(card)
+  // }
 
   // Display artists
-  for (let i = 0; i < 20; i++) {
-    const card = createCard()
-    artistsSection.appendChild(card)
-  }
+  // for (let i = 0; i < 20; i++) {
+  //   const card = createCard()
+  //   artistsSection.appendChild(card)
+  // }
 }
