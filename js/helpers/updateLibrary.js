@@ -8,7 +8,7 @@ import displayContent from './displayContent.js'
 const library = store.get('library') || {titles: [], albums: [], artists: []}
 
 // Render songs again everytime the library changes
-store.onDidChange('library', displayContent)
+//store.onDidChange('library', displayContent)
 
 export default {
   add: async fileList => {
@@ -29,8 +29,19 @@ export default {
         picture,
         track: metadata.common.track
       }
+
+      // Add to library
       library.titles.push(fileData)
     }
+
+    // Find and remove duplicates by file path
+    const removeDuplicates = (myArr, prop) => {
+      return myArr.filter((obj, pos, arr) => {
+        return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
+      })
+    }
+    library.titles = removeDuplicates(library.titles, 'file')
     store.set('library', library)
+    displayContent()
   }
 }
