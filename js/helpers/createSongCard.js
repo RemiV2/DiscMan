@@ -5,13 +5,13 @@ export default songData => {
 
   // Populate card with song data
   songCard.innerHTML = `
-    <div class="card__art"></div>
+    <div class="card__art" style="background: url(${songData.picture}) top left / cover"></div>
     <div class="card__info">
       <audio class="card__source" src="${songData.file}"></audio>
       <p class="card__title">${songData.title}</p>
       <p class="card__details">${songData.artist}</p>
     </div>
-    `
+  `
   
   return songCard
 }

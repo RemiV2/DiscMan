@@ -14,12 +14,19 @@ export default {
   add: async fileList => {
     for (const file of fileList) {
       const metadata = await mm.parseFile(file, {native: true})
+
+      // Convert picture to base64
+      let picture = metadata.common.picture[0]
+      picture = URL.createObjectURL(
+        new Blob([picture.data], { 'type': 'image/' + picture.format })
+      )
+
       const fileData = {
         file,
         title: metadata.common.title,
         album: metadata.common.album,
         artist: metadata.common.artist,
-        picture: metadata.common.picture,
+        picture,
         track: metadata.common.track
       }
       library.titles.push(fileData)
