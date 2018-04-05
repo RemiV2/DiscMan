@@ -8,10 +8,10 @@ import displayContent from './displayContent.js'
 const library = store.get('library') || {titles: [], albums: [], artists: []}
 
 // Render songs again everytime the library changes
-store.onDidChange('library', () => {
-  console.log('update')
-  displayContent()
-})
+// store.onDidChange('library', () => {
+//   console.log('update')
+//   displayContent()
+// })
 
 export default {
   add: async fileList => {
@@ -58,6 +58,7 @@ export default {
       displayContent()
     } else {
       store.set('library.titles', library.titles)
+      displayContent()
     }
 
   }

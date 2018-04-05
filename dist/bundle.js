@@ -147,7 +147,7 @@ __webpack_require__.r(__webpack_exports__);
 
   // Populate card with song data
   songCard.innerHTML = `
-    <div class="card__art" style="background: url(${songData.picture}) top left / cover"></div>
+    <div class="card__art" ${songData.picture ? ('style="background: url(' + songData.picture + ') top left / cover"') : '' }></div>
     <div class="card__info">
       <audio class="card__source" src="${songData.file}"></audio>
       <p class="card__title">${songData.title}</p>
@@ -337,10 +337,10 @@ const store = new ElectronStore()
 const library = store.get('library') || {titles: [], albums: [], artists: []}
 
 // Render songs again everytime the library changes
-store.onDidChange('library', () => {
-  console.log('update')
-  Object(_displayContent_js__WEBPACK_IMPORTED_MODULE_0__["default"])()
-})
+// store.onDidChange('library', () => {
+//   console.log('update')
+//   displayContent()
+// })
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   add: async fileList => {
@@ -387,6 +387,7 @@ store.onDidChange('library', () => {
       Object(_displayContent_js__WEBPACK_IMPORTED_MODULE_0__["default"])()
     } else {
       store.set('library.titles', library.titles)
+      Object(_displayContent_js__WEBPACK_IMPORTED_MODULE_0__["default"])()
     }
 
   }
