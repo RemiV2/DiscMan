@@ -8,18 +8,25 @@ import displayContent from './displayContent.js'
 const library = store.get('library') || {titles: [], albums: [], artists: []}
 
 // Render songs again everytime the library changes
-//store.onDidChange('library', displayContent)
+store.onDidChange('library', () => {
+  console.log('update')
+  displayContent()
+})
 
 export default {
   add: async fileList => {
     for (const file of fileList) {
       const metadata = await mm.parseFile(file, {native: true})
 
-      // Convert picture to base64
-      let picture = metadata.common.picture[0]
-      picture = URL.createObjectURL(
-        new Blob([picture.data], { 'type': 'image/' + picture.format })
-      )
+      // Get cover art if it's available
+      let picture = ''
+      if (metadata.common.picture) {
+        picture = metadata.common.picture[0]
+        // Convert picture to base64
+        picture = URL.createObjectURL(
+          new Blob([picture.data], { 'type': 'image/' + picture.format })
+        )
+      }
 
       const fileData = {
         file,
@@ -35,13 +42,23 @@ export default {
     }
 
     // Find and remove duplicates by file path
+    console.log('old', library.titles)
     const removeDuplicates = (myArr, prop) => {
       return myArr.filter((obj, pos, arr) => {
         return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
       })
     }
-    library.titles = removeDuplicates(library.titles, 'file')
-    store.set('library', library)
-    displayContent()
+    const uniqueTitles = removeDuplicates(library.titles, 'file')
+    console.log('new', uniqueTitles)
+
+    if (uniqueTitles.length !== library.titles.length) {
+      console.log('dupliccate')
+      library.titles = uniqueTitles
+      store.set('library', library)
+      displayContent()
+    } else {
+      store.set('library.titles', library.titles)
+    }
+
   }
 }

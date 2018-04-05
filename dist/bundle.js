@@ -190,6 +190,7 @@ const store = new ElectronStore()
   // Hide first start screen
   firstStart.classList.remove('active')
   // Display titles
+  titlesSection.innerHTML = ''
   for (const title of library.titles) {
     const card = Object(_createSongCard_js__WEBPACK_IMPORTED_MODULE_0__["default"])(title)
     titlesSection.appendChild(card)
@@ -336,18 +337,25 @@ const store = new ElectronStore()
 const library = store.get('library') || {titles: [], albums: [], artists: []}
 
 // Render songs again everytime the library changes
-//store.onDidChange('library', displayContent)
+store.onDidChange('library', () => {
+  console.log('update')
+  Object(_displayContent_js__WEBPACK_IMPORTED_MODULE_0__["default"])()
+})
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   add: async fileList => {
     for (const file of fileList) {
       const metadata = await mm.parseFile(file, {native: true})
 
-      // Convert picture to base64
-      let picture = metadata.common.picture[0]
-      picture = URL.createObjectURL(
-        new Blob([picture.data], { 'type': 'image/' + picture.format })
-      )
+      // Get cover art if it's available
+      let picture = ''
+      if (metadata.common.picture) {
+        picture = metadata.common.picture[0]
+        // Convert picture to base64
+        picture = URL.createObjectURL(
+          new Blob([picture.data], { 'type': 'image/' + picture.format })
+        )
+      }
 
       const fileData = {
         file,
@@ -363,14 +371,24 @@ const library = store.get('library') || {titles: [], albums: [], artists: []}
     }
 
     // Find and remove duplicates by file path
+    console.log('old', library.titles)
     const removeDuplicates = (myArr, prop) => {
       return myArr.filter((obj, pos, arr) => {
         return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
       })
     }
-    library.titles = removeDuplicates(library.titles, 'file')
-    store.set('library', library)
-    Object(_displayContent_js__WEBPACK_IMPORTED_MODULE_0__["default"])()
+    const uniqueTitles = removeDuplicates(library.titles, 'file')
+    console.log('new', uniqueTitles)
+
+    if (uniqueTitles.length !== library.titles.length) {
+      console.log('dupliccate')
+      library.titles = uniqueTitles
+      store.set('library', library)
+      Object(_displayContent_js__WEBPACK_IMPORTED_MODULE_0__["default"])()
+    } else {
+      store.set('library.titles', library.titles)
+    }
+
   }
 });
 

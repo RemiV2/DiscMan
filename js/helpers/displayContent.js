@@ -18,6 +18,7 @@ export default () => {
   // Hide first start screen
   firstStart.classList.remove('active')
   // Display titles
+  titlesSection.innerHTML = ''
   for (const title of library.titles) {
     const card = createSongCard(title)
     titlesSection.appendChild(card)
