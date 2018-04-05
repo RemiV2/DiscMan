@@ -7,7 +7,6 @@ import createSongCard from './createSongCard.js'
 export default () => {
   // Get library from storage
   const library = store.get('library')
-  console.log(library)
 
   // Get sections from DOM
   const firstStart = document.querySelector('.first-start')

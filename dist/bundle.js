@@ -179,7 +179,6 @@ const store = new ElectronStore()
 /* harmony default export */ __webpack_exports__["default"] = (() => {
   // Get library from storage
   const library = store.get('library')
-  console.log(library)
 
   // Get sections from DOM
   const firstStart = document.querySelector('.first-start')
@@ -370,18 +369,22 @@ const library = store.get('library') || {titles: [], albums: [], artists: []}
       library.titles.push(fileData)
     }
 
+    // Sort alphabetically by song name
+    library.titles = library.titles.sort((a, b) => {
+      const titleA = a.title.toUpperCase()
+      const titleB = b.title.toUpperCase()
+      return (titleA < titleB) ? -1 : (titleA > titleB) ? 1 : 0
+    })
+
     // Find and remove duplicates by file path
-    console.log('old', library.titles)
     const removeDuplicates = (myArr, prop) => {
       return myArr.filter((obj, pos, arr) => {
         return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
       })
     }
     const uniqueTitles = removeDuplicates(library.titles, 'file')
-    console.log('new', uniqueTitles)
 
     if (uniqueTitles.length !== library.titles.length) {
-      console.log('dupliccate')
       library.titles = uniqueTitles
       store.set('library', library)
       Object(_displayContent_js__WEBPACK_IMPORTED_MODULE_0__["default"])()
