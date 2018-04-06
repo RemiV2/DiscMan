@@ -344,12 +344,6 @@ const store = new ElectronStore()
 // Get current library or create new one
 const library = store.get('library') || {titles: [], albums: [], artists: []}
 
-// Render songs again everytime the library changes
-// store.onDidChange('library', () => {
-//   console.log('update')
-//   displayContent()
-// })
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   add: async fileList => {
     for (const file of fileList) {
@@ -395,14 +389,37 @@ const library = store.get('library') || {titles: [], albums: [], artists: []}
     const uniqueTitles = removeDuplicates(library.titles, 'file')
 
     if (uniqueTitles.length !== library.titles.length) {
+      // Only update library if there were duplicates
       library.titles = uniqueTitles
-      store.set('library', library)
-      Object(_displayContent_js__WEBPACK_IMPORTED_MODULE_0__["default"])()
-    } else {
-      store.set('library.titles', library.titles)
-      Object(_displayContent_js__WEBPACK_IMPORTED_MODULE_0__["default"])()
     }
+    
+    // Group by albums
+    library.albums = []
+    for (const titleObject of library.titles) {
+      // Check if album is new
+      let newAlbum = true 
+      for (const album of library.albums) {
+        if (album.name === titleObject.album) {
+          newAlbum = false
+          // Add title to album
+          album.titles.push(titleObject)
+        }
+      }
 
+      // Create new album object
+      if (newAlbum) {
+        library.albums.push({
+          name: titleObject.album,
+          titles: [titleObject]
+        })
+      }
+    }
+    
+    // Save changes
+    store.set('library', library)
+
+    // Update UI to display changes
+    Object(_displayContent_js__WEBPACK_IMPORTED_MODULE_0__["default"])()
   }
 });
 
