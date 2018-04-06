@@ -248,7 +248,16 @@ const mime = __webpack_require__(/*! mime-types */ "./node_modules/mime-types/in
     e.preventDefault()
     const rootFiles = e.dataTransfer.files
     for (const rootFile of rootFiles) {
-      newMusicPaths = crawlDirectory(rootFile.path, newMusicPaths)
+      if (fs.statSync(rootFile.path).isDirectory()) {
+        console.log('folder')
+        newMusicPaths = crawlDirectory(rootFile.path, newMusicPaths)
+      } else {
+        // Only save if it's a supported audio file
+        const type = mime.lookup(rootFile.path).toString()
+        if (type.substring(0, 5) === 'audio' && !type.includes('x-mpegurl')) {
+          newMusicPaths.push(rootFile.path)
+        }
+      }
     }
 
     // Add dragged music files to library
@@ -364,6 +373,7 @@ const library = store.get('library') || {titles: [], albums: [], artists: []}
         picture,
         track: metadata.common.track
       }
+      
 
       // Add to library
       library.titles.push(fileData)

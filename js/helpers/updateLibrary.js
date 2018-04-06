@@ -36,6 +36,7 @@ export default {
         picture,
         track: metadata.common.track
       }
+      
 
       // Add to library
       library.titles.push(fileData)
