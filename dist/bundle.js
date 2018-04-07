@@ -131,6 +131,35 @@ for (const tab of tabs) {
 
 /***/ }),
 
+/***/ "./js/helpers/createAlbumCard.js":
+/*!***************************************!*\
+  !*** ./js/helpers/createAlbumCard.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (albumData => {
+  // Create a card for the song
+  const albumCard = document.createElement('div')
+  albumCard.classList.add('card', 'album')
+
+
+  // Populate card with song data
+  albumCard.innerHTML = `
+    <div class="card__art" ${albumData.titles[0].picture ? ('style="background: url(' + albumData.titles[0].picture + ') top left / cover"') : ''}></div>
+    <div class="card__info">
+      <p class="card__title">${albumData.name}</p>
+      <p class="card__details">${albumData.artist}</p>
+    </div>
+  `
+
+  return albumCard
+});
+
+/***/ }),
+
 /***/ "./js/helpers/createSongCard.js":
 /*!**************************************!*\
   !*** ./js/helpers/createSongCard.js ***!
@@ -143,7 +172,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = (songData => {
   // Create a card for the song
   const songCard = document.createElement('div')
-  songCard.classList.add('card')
+  songCard.classList.add('card', 'song')
 
   // Populate card with song data
   songCard.innerHTML = `
@@ -170,8 +199,10 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _createSongCard_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./createSongCard.js */ "./js/helpers/createSongCard.js");
+/* harmony import */ var _createAlbumCard_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./createAlbumCard.js */ "./js/helpers/createAlbumCard.js");
 const ElectronStore = __webpack_require__(/*! electron-store */ "./node_modules/electron-store/index.js")
 const store = new ElectronStore()
+
 
 
 
@@ -196,10 +227,11 @@ const store = new ElectronStore()
   }
   
   // Display albums
-  // for (let i = 0; i < 20; i++) {
-  //   const card = createCard()
-  //   albumsSection.appendChild(card)
-  // }
+  albumsSection.innerHTML = ''
+  for (const album of library.albums) {
+    const card = Object(_createAlbumCard_js__WEBPACK_IMPORTED_MODULE_1__["default"])(album)
+    albumsSection.appendChild(card)
+  }
 
   // Display artists
   // for (let i = 0; i < 20; i++) {
@@ -410,9 +442,26 @@ const library = store.get('library') || {titles: [], albums: [], artists: []}
       if (newAlbum) {
         library.albums.push({
           name: titleObject.album,
+          artist: titleObject.artist,
           titles: [titleObject]
         })
       }
+    }
+
+    // Sort albums alphabetically
+    library.albums = library.albums.sort((a, b) => {
+      const albumA = a.name.toUpperCase()
+      const albumB = b.name.toUpperCase()
+      return (albumA < albumB) ? -1 : (albumA > albumB) ? 1 : 0
+    })
+
+    // Delete duplicate albums
+    console.log(library.albums)
+    const uniqueAlbums = removeDuplicates(library.albums, name)
+    if (uniqueAlbums.length !== library.albums.length) {
+      // Only update library if there were duplicates
+      console.log('duplicate')
+      library.albums = uniqueAlbums
     }
     
     // Save changes

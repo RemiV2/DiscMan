@@ -73,9 +73,26 @@ export default {
       if (newAlbum) {
         library.albums.push({
           name: titleObject.album,
+          artist: titleObject.artist,
           titles: [titleObject]
         })
       }
+    }
+
+    // Sort albums alphabetically
+    library.albums = library.albums.sort((a, b) => {
+      const albumA = a.name.toUpperCase()
+      const albumB = b.name.toUpperCase()
+      return (albumA < albumB) ? -1 : (albumA > albumB) ? 1 : 0
+    })
+
+    // Delete duplicate albums
+    console.log(library.albums)
+    const uniqueAlbums = removeDuplicates(library.albums, name)
+    if (uniqueAlbums.length !== library.albums.length) {
+      // Only update library if there were duplicates
+      console.log('duplicate')
+      library.albums = uniqueAlbums
     }
     
     // Save changes

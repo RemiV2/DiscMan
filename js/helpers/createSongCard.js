@@ -1,7 +1,7 @@
 export default songData => {
   // Create a card for the song
   const songCard = document.createElement('div')
-  songCard.classList.add('card')
+  songCard.classList.add('card', 'song')
 
   // Populate card with song data
   songCard.innerHTML = `

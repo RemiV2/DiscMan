@@ -2,6 +2,7 @@ const ElectronStore = require('electron-store')
 const store = new ElectronStore()
 
 import createSongCard from './createSongCard.js'
+import createAlbumCard from './createAlbumCard.js'
 
 
 export default () => {
@@ -24,10 +25,11 @@ export default () => {
   }
   
   // Display albums
-  // for (let i = 0; i < 20; i++) {
-  //   const card = createCard()
-  //   albumsSection.appendChild(card)
-  // }
+  albumsSection.innerHTML = ''
+  for (const album of library.albums) {
+    const card = createAlbumCard(album)
+    albumsSection.appendChild(card)
+  }
 
   // Display artists
   // for (let i = 0; i < 20; i++) {
