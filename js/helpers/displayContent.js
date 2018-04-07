@@ -38,6 +38,5 @@ export default () => {
     const card = createArtistCard(artist)
     artistsSection.appendChild(card)
   }
-  
 
 }

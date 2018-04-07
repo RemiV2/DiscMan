@@ -7,6 +7,25 @@ import displayContent from './displayContent.js'
 // Get current library or create new one
 const library = store.get('library') || {titles: [], albums: [], artists: []}
 
+// Save pictures as base64
+const convertTo64 = picture => {
+  return new Promise(resolve => {
+    const reader = new FileReader()
+    reader.readAsDataURL(picture)
+    reader.addEventListener('loadend', () => {
+      resolve(reader.result)
+      // console.log(render.result)
+    })
+  })
+}
+
+// Find and remove duplicates by file path
+const removeDuplicates = (myArr, prop) => {
+  return myArr.filter((obj, pos, arr) => {
+    return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
+  })
+}
+
 export default {
   add: async fileList => {
     for (const file of fileList) {
@@ -16,10 +35,11 @@ export default {
       let picture = ''
       if (metadata.common.picture) {
         picture = metadata.common.picture[0]
-        // Convert picture to base64
-        picture = URL.createObjectURL(
-          new Blob([picture.data], { 'type': 'image/' + picture.format })
-        )
+        // Convert picture to Blob
+        picture = new Blob([picture.data], { 'type': 'image/' + picture.format })
+        // Convert Blob to base64 for better persistence
+        picture = await convertTo64(picture)
+        console.log(picture)
       }
 
       const fileData = {
@@ -43,12 +63,6 @@ export default {
       return (titleA < titleB) ? -1 : (titleA > titleB) ? 1 : 0
     })
 
-    // Find and remove duplicates by file path
-    const removeDuplicates = (myArr, prop) => {
-      return myArr.filter((obj, pos, arr) => {
-        return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
-      })
-    }
     const uniqueTitles = removeDuplicates(library.titles, 'file')
 
     if (uniqueTitles.length !== library.titles.length) {

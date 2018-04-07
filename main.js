@@ -22,7 +22,7 @@ function createWindow () {
     height: mainWindowState.height,
     titleBarStyle: 'hiddenInset',
     vibrancy: 'medium-light',
-    icon: __dirname + '/images/icon.ico',
+    icon: __dirname + '/images/icon.icns',
     show: false // until the page is fully loaded
   })
 

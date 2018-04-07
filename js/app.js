@@ -2,7 +2,7 @@ const ElectronStore = require('electron-store')
 const store = new ElectronStore()
 
 // TODO: remove clear
-store.clear()
+//store.clear()
 
 const tabs = document.querySelectorAll('header li.tab')
 const firstStart = document.querySelector('.first-start')
