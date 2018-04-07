@@ -103,12 +103,12 @@ export default {
       for (const artist of library.artists) {
         if (artist.name === albumObject.artist) {
           newArtist = false
-          // Add album
+          // Add album to artist
           artist.albums.push(albumObject)
         }
       }
 
-      // Create new album object
+      // Create new artist object
       if (newArtist) {
         library.artists.push({
           name: albumObject.artist,
@@ -117,7 +117,12 @@ export default {
       }
     }
 
-    console.table(library.artists)
+    // Sort artists alphabetically
+    library.artists = library.artists.sort((a, b) => {
+      const artistA = a.name.toUpperCase()
+      const artistB = b.name.toUpperCase()
+      return (artistA < artistB) ? -1 : (artistA > artistB) ? 1 : 0
+    })
     
     // Save changes
     store.set('library', library)

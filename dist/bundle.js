@@ -270,6 +270,7 @@ const store = new ElectronStore()
     const card = Object(_createArtistCard_js__WEBPACK_IMPORTED_MODULE_2__["default"])(artist)
     artistsSection.appendChild(card)
   }
+  
 
 });
 
@@ -505,12 +506,12 @@ const library = store.get('library') || {titles: [], albums: [], artists: []}
       for (const artist of library.artists) {
         if (artist.name === albumObject.artist) {
           newArtist = false
-          // Add album
+          // Add album to artist
           artist.albums.push(albumObject)
         }
       }
 
-      // Create new album object
+      // Create new artist object
       if (newArtist) {
         library.artists.push({
           name: albumObject.artist,
@@ -519,7 +520,12 @@ const library = store.get('library') || {titles: [], albums: [], artists: []}
       }
     }
 
-    console.table(library.artists)
+    // Sort artists alphabetically
+    library.artists = library.artists.sort((a, b) => {
+      const artistA = a.name.toUpperCase()
+      const artistB = b.name.toUpperCase()
+      return (artistA < artistB) ? -1 : (artistA > artistB) ? 1 : 0
+    })
     
     // Save changes
     store.set('library', library)
