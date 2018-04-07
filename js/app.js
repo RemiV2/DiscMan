@@ -10,6 +10,7 @@ const firstStart = document.querySelector('.first-start')
 import displayContent from './helpers/displayContent.js'
 import switchTab from './helpers/switchTab.js'
 import handleDragAndDrop from './helpers/handleDragAndDrop.js'
+import handleMedia from './helpers/handleMedia.js'
 import '../sass/style.sass'
 
 if (!store.get('library')) {
@@ -17,7 +18,12 @@ if (!store.get('library')) {
   firstStart.classList.add('active')
 } else {
   // Populate app with music library
-  displayContent()
+  displayContent().then(() => {
+    handleMedia()
+  })
+
+  // Listen to events on cards
+  //handleMedia()
 }
 
 // Listen for drags to update library

@@ -94,8 +94,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_displayContent_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers/displayContent.js */ "./js/helpers/displayContent.js");
 /* harmony import */ var _helpers_switchTab_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers/switchTab.js */ "./js/helpers/switchTab.js");
 /* harmony import */ var _helpers_handleDragAndDrop_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers/handleDragAndDrop.js */ "./js/helpers/handleDragAndDrop.js");
-/* harmony import */ var _sass_style_sass__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../sass/style.sass */ "./sass/style.sass");
-/* harmony import */ var _sass_style_sass__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_sass_style_sass__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _helpers_handleMedia_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./helpers/handleMedia.js */ "./js/helpers/handleMedia.js");
+/* harmony import */ var _sass_style_sass__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../sass/style.sass */ "./sass/style.sass");
+/* harmony import */ var _sass_style_sass__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_sass_style_sass__WEBPACK_IMPORTED_MODULE_4__);
 const ElectronStore = __webpack_require__(/*! electron-store */ "./node_modules/electron-store/index.js")
 const store = new ElectronStore()
 
@@ -110,12 +111,18 @@ const firstStart = document.querySelector('.first-start')
 
 
 
+
 if (!store.get('library')) {
   // Manage first start
   firstStart.classList.add('active')
 } else {
   // Populate app with music library
-  Object(_helpers_displayContent_js__WEBPACK_IMPORTED_MODULE_0__["default"])()
+  Object(_helpers_displayContent_js__WEBPACK_IMPORTED_MODULE_0__["default"])().then(() => {
+    Object(_helpers_handleMedia_js__WEBPACK_IMPORTED_MODULE_3__["default"])()
+  })
+
+  // Listen to events on cards
+  //handleMedia()
 }
 
 // Listen for drags to update library
@@ -237,40 +244,45 @@ const store = new ElectronStore()
 
 
 
-
 /* harmony default export */ __webpack_exports__["default"] = (() => {
-  // Get library from storage
-  const library = store.get('library')
+  return new Promise(resolve => {
+    // Get library from storage
+    const library = store.get('library')
 
-  // Get sections from DOM
-  const firstStart = document.querySelector('.first-start')
-  const titlesSection = document.querySelector('.content[data-section="titles"]')
-  const albumsSection = document.querySelector('.content[data-section="albums"]')
-  const artistsSection = document.querySelector('.content[data-section="artists"]')
+    // Get sections from DOM
+    const firstStart = document.querySelector('.first-start')
+    const titlesSection = document.querySelector('.content[data-section="titles"]')
+    const albumsSection = document.querySelector('.content[data-section="albums"]')
+    const artistsSection = document.querySelector('.content[data-section="artists"]')
 
-  // Hide first start screen
-  firstStart.classList.remove('active')
-  // Display titles
-  titlesSection.innerHTML = ''
-  for (const title of library.titles) {
-    const card = Object(_createSongCard_js__WEBPACK_IMPORTED_MODULE_0__["default"])(title)
-    titlesSection.appendChild(card)
-  }
-  
-  // Display albums
-  albumsSection.innerHTML = ''
-  for (const album of library.albums) {
-    const card = Object(_createAlbumCard_js__WEBPACK_IMPORTED_MODULE_1__["default"])(album)
-    albumsSection.appendChild(card)
-  }
-  
-  // Display artists
-  artistsSection.innerHTML = ''
-  for (const artist of library.artists) {
-    const card = Object(_createArtistCard_js__WEBPACK_IMPORTED_MODULE_2__["default"])(artist)
-    artistsSection.appendChild(card)
-  }
+    // Hide first start screen
+    firstStart.classList.remove('active')
+    // Display titles
+    titlesSection.innerHTML = ''
+    for (const title of library.titles) {
+      const card = Object(_createSongCard_js__WEBPACK_IMPORTED_MODULE_0__["default"])(title)
+      titlesSection.appendChild(card)
+    }
+    
+    // Display albums
+    albumsSection.innerHTML = ''
+    for (const album of library.albums) {
+      const card = Object(_createAlbumCard_js__WEBPACK_IMPORTED_MODULE_1__["default"])(album)
+      albumsSection.appendChild(card)
+    }
+    
+    // Display artists
+    artistsSection.innerHTML = ''
+    for (const artist of library.artists) {
+      const card = Object(_createArtistCard_js__WEBPACK_IMPORTED_MODULE_2__["default"])(artist)
+      artistsSection.appendChild(card)
+      if (artist === library.artists[library.artists.length -1]) {
+        // Rendering is done
+        resolve()
+      }
+    }
 
+  })
 });
 
 /***/ }),
@@ -348,6 +360,30 @@ const mime = __webpack_require__(/*! mime-types */ "./node_modules/mime-types/in
       }
     })
     return fileList;
+  }
+});
+
+/***/ }),
+
+/***/ "./js/helpers/handleMedia.js":
+/*!***********************************!*\
+  !*** ./js/helpers/handleMedia.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+let songCards
+
+/* harmony default export */ __webpack_exports__["default"] = (() => {
+  songCards = document.querySelectorAll('.card.song')
+
+  for (const songCard of songCards) {
+    songCard.addEventListener('click', () => {
+      const audio = songCard.querySelector('audio')
+      console.log('play ' + audio.src)
+    })
   }
 });
 
