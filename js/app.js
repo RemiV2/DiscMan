@@ -18,9 +18,7 @@ if (!store.get('library')) {
   firstStart.classList.add('active')
 } else {
   // Populate app with music library
-  displayContent().then(() => {
-    handleMedia()
-  })
+  displayContent().then(handleMedia)
 
   // Listen to events on cards
   //handleMedia()

@@ -7,6 +7,11 @@
   color: $primaryText
   &:nth-child(even)
     background: darken($primaryBackground, 1.8)
+  &.is-playing
+    // macOS blue color
+    background: #007AFF
+    p
+      color: $primaryBackground !important
 
   .card__art
     height: 40px
