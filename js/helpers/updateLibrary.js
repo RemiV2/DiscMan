@@ -88,12 +88,36 @@ export default {
 
     // Delete duplicate albums
     console.log(library.albums)
-    const uniqueAlbums = removeDuplicates(library.albums, name)
-    if (uniqueAlbums.length !== library.albums.length) {
-      // Only update library if there were duplicates
-      console.log('duplicate')
-      library.albums = uniqueAlbums
+    // const uniqueAlbums = removeDuplicates(library.albums, name)
+    // if (uniqueAlbums.length !== library.albums.length) {
+    //   // Only update library if there were duplicates
+    //   console.log('duplicate')
+    //   library.albums = uniqueAlbums
+    // }
+
+    // Group by artists
+    library.artists = []
+    for (const albumObject of library.albums) {
+      // Check if artist is new
+      let newArtist = true
+      for (const artist of library.artists) {
+        if (artist.name === albumObject.artist) {
+          newArtist = false
+          // Add album
+          artist.albums.push(albumObject)
+        }
+      }
+
+      // Create new album object
+      if (newArtist) {
+        library.artists.push({
+          name: albumObject.artist,
+          albums: [albumObject]
+        })
+      }
     }
+
+    console.table(library.artists)
     
     // Save changes
     store.set('library', library)

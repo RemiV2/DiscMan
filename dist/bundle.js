@@ -160,6 +160,35 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./js/helpers/createArtistCard.js":
+/*!****************************************!*\
+  !*** ./js/helpers/createArtistCard.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (artistData => {
+  // Create a card for the song
+  const artistCard = document.createElement('div')
+  artistCard.classList.add('card', 'artist')
+
+
+  // Populate card with song data
+  artistCard.innerHTML = `
+    <div class="card__art" ${artistData.albums[0].titles[0].picture ? ('style="background: url(' + artistData.albums[0].titles[0].picture + ') top left / cover"') : ''}></div>
+    <div class="card__info">
+      <p class="card__title">${artistData.name}</p>
+      <p class="card__details">${artistData.albums.length} album${artistData.albums.length > 1 ? 's' : ''}</p>
+    </div>
+  `
+
+  return artistCard
+});
+
+/***/ }),
+
 /***/ "./js/helpers/createSongCard.js":
 /*!**************************************!*\
   !*** ./js/helpers/createSongCard.js ***!
@@ -200,8 +229,10 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _createSongCard_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./createSongCard.js */ "./js/helpers/createSongCard.js");
 /* harmony import */ var _createAlbumCard_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./createAlbumCard.js */ "./js/helpers/createAlbumCard.js");
+/* harmony import */ var _createArtistCard_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./createArtistCard.js */ "./js/helpers/createArtistCard.js");
 const ElectronStore = __webpack_require__(/*! electron-store */ "./node_modules/electron-store/index.js")
 const store = new ElectronStore()
+
 
 
 
@@ -232,12 +263,14 @@ const store = new ElectronStore()
     const card = Object(_createAlbumCard_js__WEBPACK_IMPORTED_MODULE_1__["default"])(album)
     albumsSection.appendChild(card)
   }
-
+  
   // Display artists
-  // for (let i = 0; i < 20; i++) {
-  //   const card = createCard()
-  //   artistsSection.appendChild(card)
-  // }
+  artistsSection.innerHTML = ''
+  for (const artist of library.artists) {
+    const card = Object(_createArtistCard_js__WEBPACK_IMPORTED_MODULE_2__["default"])(artist)
+    artistsSection.appendChild(card)
+  }
+
 });
 
 /***/ }),
@@ -457,12 +490,36 @@ const library = store.get('library') || {titles: [], albums: [], artists: []}
 
     // Delete duplicate albums
     console.log(library.albums)
-    const uniqueAlbums = removeDuplicates(library.albums, name)
-    if (uniqueAlbums.length !== library.albums.length) {
-      // Only update library if there were duplicates
-      console.log('duplicate')
-      library.albums = uniqueAlbums
+    // const uniqueAlbums = removeDuplicates(library.albums, name)
+    // if (uniqueAlbums.length !== library.albums.length) {
+    //   // Only update library if there were duplicates
+    //   console.log('duplicate')
+    //   library.albums = uniqueAlbums
+    // }
+
+    // Group by artists
+    library.artists = []
+    for (const albumObject of library.albums) {
+      // Check if artist is new
+      let newArtist = true
+      for (const artist of library.artists) {
+        if (artist.name === albumObject.artist) {
+          newArtist = false
+          // Add album
+          artist.albums.push(albumObject)
+        }
+      }
+
+      // Create new album object
+      if (newArtist) {
+        library.artists.push({
+          name: albumObject.artist,
+          albums: [albumObject]
+        })
+      }
     }
+
+    console.table(library.artists)
     
     // Save changes
     store.set('library', library)

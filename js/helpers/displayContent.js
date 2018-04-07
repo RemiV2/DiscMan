@@ -3,6 +3,7 @@ const store = new ElectronStore()
 
 import createSongCard from './createSongCard.js'
 import createAlbumCard from './createAlbumCard.js'
+import createArtistCard from './createArtistCard.js'
 
 
 export default () => {
@@ -30,10 +31,12 @@ export default () => {
     const card = createAlbumCard(album)
     albumsSection.appendChild(card)
   }
-
+  
   // Display artists
-  // for (let i = 0; i < 20; i++) {
-  //   const card = createCard()
-  //   artistsSection.appendChild(card)
-  // }
+  artistsSection.innerHTML = ''
+  for (const artist of library.artists) {
+    const card = createArtistCard(artist)
+    artistsSection.appendChild(card)
+  }
+
 }
