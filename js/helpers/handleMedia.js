@@ -1,16 +1,26 @@
-let songCards, failCount
+let songCards
 const player = document.querySelector('.player')
+const sections = document.querySelectorAll('.content')
 
 const playSong = audio => {
-  console.log(audio)
+  // Start song playback
   return audio.play()
 }
 
 const updatePlayer = songCard => {
-  player.classList.add('active')
+  // Display song info on player
   player.querySelector('.data .title').innerHTML = songCard.querySelector('.card__title').innerHTML
   player.querySelector('.data .artist').innerHTML = songCard.querySelector('.card__details').innerHTML
-  player.querySelector('.art').style.background = songCard.querySelector('.art').style.background
+  //player.querySelector('.art').style.background = songCard.querySelector('.art').style.background
+  //console.log(songCard.querySelector('.art').style.background)
+  player.querySelector('.art').style.background = songCard.querySelector('.card__art').style.background
+  console.log(songCard)
+
+  // Make player visible
+  player.classList.add('active')
+  for (const section of sections) {
+    section.classList.add('player-on')
+  }
 }
 
 export default () => {
@@ -25,31 +35,29 @@ export default () => {
         if (currentlyPlaying) {
           // End current playback
           currentlyPlaying.classList.remove('is-playing')
-          currentlyPlaying.querySelector('audio').position 0
+          currentlyPlaying.querySelector('audio').currentTime = 0
           currentlyPlaying.querySelector('audio').pause()
         }
         
         songCard.classList.add('is-playing')
-        failCount = 0
-        playSong(audio)
-          .then(() => {
-            // Playback was successful
-            console.log('enjoy')
-            // Display song info on player
-            updatePlayer(songCard)
-          })
-          .catch(error => {
-            failCount++
-            if (failCount < 3) {
-              // Try 2 more times
+        window.setTimeout(() => {
+          playSong(audio)
+            .then(() => {
+              // Playback was successful
+              console.log('enjoy')
+              // Display song info on player
+              updatePlayer(songCard)
+            })
+            .catch(error => {
+              // Try again
               window.setTimeout(() => {
                 console.log('try again')
-                playSong(audio)
+                playSong(audio).catch(error => {
+                  console.error('Could not play, ', error)
+                })
               }, 300)
-            } else {
-              console.log('Could not play')
-            }
-          })
+            })
+        }, 100)
       }
     })
   }
