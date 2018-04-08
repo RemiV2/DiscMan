@@ -33,11 +33,6 @@ function createWindow () {
     slashes: true
   }))
 
-  win.on('ready-to-show', function() {
-    win.show();
-    win.focus();
-  })
-
   // Open the DevTools.
   win.webContents.openDevTools()
 

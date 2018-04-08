@@ -1,6 +1,8 @@
 const ElectronStore = require('electron-store')
 const store = new ElectronStore()
 
+const currentWindow = require('electron').remote.getCurrentWindow()
+
 // TODO: remove clear
 // store.clear()
 
@@ -16,12 +18,19 @@ import '../sass/style.sass'
 if (!store.get('library')) {
   // Manage first start
   firstStart.classList.add('active')
+  // Only show app when it's loaded
+  currentWindow.show()
+  currentWindow.focus()
 } else {
   // Populate app with music library
-  displayContent().then(handleMedia)
+  displayContent().then(() => {
+    // Only show app when it's loaded
+    currentWindow.show()
+    currentWindow.focus()
 
-  // Listen to events on cards
-  //handleMedia()
+    // Listen to events on cards
+    handleMedia()
+  })
 }
 
 // Listen for drags to update library
