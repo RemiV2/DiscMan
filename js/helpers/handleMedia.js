@@ -9,19 +9,45 @@ const icons = {
   volume: player.querySelector('.volume .icon')
 }
 
-const playSong = audio => {
+const playSong = (audio, songCard) => {
   // Start song playback
-  return audio.play()
+  audio.play()
+    .then(() => {
+      console.log('playing')
+      // Display song info on player
+      updatePlayer(songCard)
+      icons.playPause.classList.add('playing')
+      icons.playPause.classList.remove('paused')
+
+      // Play on pause audio on icon click
+      icons.playPause.addEventListener('click', () => {
+        if (icons.playPause.classList.contains('playing')) {
+          audio.pause()
+          icons.playPause.classList.remove('playing')
+          icons.playPause.classList.add('paused')
+        } else {
+          audio.play()
+          icons.playPause.classList.add('playing')
+          icons.playPause.classList.remove('paused')
+        }
+      })
+    })
+    .catch(error => {
+      // Try again
+      window.setTimeout(() => {
+        console.log('try again')
+        playSong(audio, songCard).catch(error => {
+          console.error('Could not play, ', error)
+        })
+      }, 300)
+    })
 }
 
 const updatePlayer = songCard => {
   // Display song info on player
   player.querySelector('.data .title').innerHTML = songCard.querySelector('.card__title').innerHTML
   player.querySelector('.data .artist').innerHTML = songCard.querySelector('.card__details').innerHTML
-  //player.querySelector('.art').style.background = songCard.querySelector('.art').style.background
-  //console.log(songCard.querySelector('.art').style.background)
   player.querySelector('.art').style.background = songCard.querySelector('.card__art').style.background
-  console.log(songCard)
 
   // Make player visible
   player.classList.add('active')
@@ -48,22 +74,7 @@ export default () => {
         
         songCard.classList.add('is-playing')
         window.setTimeout(() => {
-          playSong(audio)
-            .then(() => {
-              // Playback was successful
-              console.log('enjoy')
-              // Display song info on player
-              updatePlayer(songCard)
-            })
-            .catch(error => {
-              // Try again
-              window.setTimeout(() => {
-                console.log('try again')
-                playSong(audio).catch(error => {
-                  console.error('Could not play, ', error)
-                })
-              }, 300)
-            })
+          playSong(audio, songCard)
         }, 100)
       }
     })
