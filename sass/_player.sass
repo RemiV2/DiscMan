@@ -4,7 +4,7 @@
   position: fixed
   bottom: 0
   transform: translateY(90px)
-  transition: 0.2s transform
+  transition: 0.2s transform ease-in-out
   will-change: transform
   flex-direction: row
   justify-content: space-between
@@ -12,6 +12,9 @@
   color: $primaryText
   background-image: linear-gradient(-180deg, rgba(235, 234, 237, 0.45) 0%, rgba(223, 219, 223, 0.45) 100%)
   display: none
+  &.active
+    display: flex
+    transform: translateY(0)
 
   #timeControl
     width: 100%

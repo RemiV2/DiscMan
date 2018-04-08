@@ -39,7 +39,6 @@ export default {
         picture = new Blob([picture.data], { 'type': 'image/' + picture.format })
         // Convert Blob to base64 for better persistence
         picture = await convertTo64(picture)
-        console.log(picture)
       }
 
       const fileData = {
@@ -100,7 +99,7 @@ export default {
       return (albumA < albumB) ? -1 : (albumA > albumB) ? 1 : 0
     })
 
-    // Delete duplicate albums
+    // Delete duplicate albums 
     console.log(library.albums)
     // const uniqueAlbums = removeDuplicates(library.albums, name)
     // if (uniqueAlbums.length !== library.albums.length) {
