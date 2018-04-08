@@ -2,6 +2,13 @@ let songCards
 const player = document.querySelector('.player')
 const sections = document.querySelectorAll('.content')
 
+const icons = {
+  previous: player.querySelector('.media-controls .previous'),
+  playPause: player.querySelector('.media-controls .play-pause'),
+  next: player.querySelector('.media-controls .next'),
+  volume: player.querySelector('.volume .icon')
+}
+
 const playSong = audio => {
   // Start song playback
   return audio.play()
