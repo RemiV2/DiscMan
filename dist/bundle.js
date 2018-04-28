@@ -438,6 +438,7 @@ const mime = __webpack_require__(/*! mime-types */ "./node_modules/mime-types/in
 __webpack_require__.r(__webpack_exports__);
 let songCards
 const player = document.querySelector('.player')
+const playerSource = player.querySelector('audio')
 const sections = document.querySelectorAll('.content')
 
 const icons = {
@@ -449,7 +450,9 @@ const icons = {
 
 const playSong = (audio, songCard) => {
   // Start song playback
-  audio.play()
+  playerSource.src = audio.src
+  playerSource.currentTime = 0
+  playerSource.play()
     .then(() => {
       console.log('playing')
       // Display song info on player
@@ -460,11 +463,11 @@ const playSong = (audio, songCard) => {
       // Play on pause audio on icon click
       icons.playPause.addEventListener('click', () => {
         if (icons.playPause.classList.contains('playing')) {
-          audio.pause()
+          playerSource.pause()
           icons.playPause.classList.remove('playing')
           icons.playPause.classList.add('paused')
         } else {
-          audio.play()
+          playerSource.play()
           icons.playPause.classList.add('playing')
           icons.playPause.classList.remove('paused')
         }
@@ -506,8 +509,6 @@ const updatePlayer = songCard => {
         if (currentlyPlaying) {
           // End current playback
           currentlyPlaying.classList.remove('is-playing')
-          currentlyPlaying.querySelector('audio').currentTime = 0
-          currentlyPlaying.querySelector('audio').pause()
         }
         
         songCard.classList.add('is-playing')
