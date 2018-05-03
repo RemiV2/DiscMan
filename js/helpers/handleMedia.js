@@ -93,4 +93,9 @@ export default () => {
   timeBar.addEventListener('input', function() {
     playerSource.currentTime = this.value * playerSource.duration
   })
+
+  // Auto update time position
+  playerSource.addEventListener('timeupdate', function() {
+    timeBar.value = this.currentTime / this.duration
+  })
 }
