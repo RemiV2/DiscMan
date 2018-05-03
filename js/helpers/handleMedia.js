@@ -80,4 +80,11 @@ export default () => {
       }
     })
   }
+
+  // Adjust volume
+  const volumeBar = document.querySelector('.vol-control')
+  console.log(volumeBar)
+  volumeBar.addEventListener('input', function() {
+    playerSource.volume = this.value
+  })
 }

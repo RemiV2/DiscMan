@@ -518,6 +518,13 @@ const updatePlayer = songCard => {
       }
     })
   }
+
+  // Adjust volume
+  const volumeBar = document.querySelector('.vol-control')
+  console.log(volumeBar)
+  volumeBar.addEventListener('input', function() {
+    playerSource.volume = this.value
+  })
 });
 
 /***/ }),
