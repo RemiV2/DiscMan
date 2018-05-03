@@ -2,6 +2,8 @@ let songCards
 const player = document.querySelector('.player')
 const playerSource = player.querySelector('audio')
 const sections = document.querySelectorAll('.content')
+const timeBar = document.querySelector('.time-control')
+const volumeBar = document.querySelector('.vol-control')
 
 const icons = {
   previous: player.querySelector('.media-controls .previous'),
@@ -14,6 +16,7 @@ const playSong = (audio, songCard) => {
   // Start song playback
   playerSource.src = audio.src
   playerSource.currentTime = 0
+  timeBar.value = 0
   playerSource.play()
     .then(() => {
       console.log('playing')
@@ -82,9 +85,12 @@ export default () => {
   }
 
   // Adjust volume
-  const volumeBar = document.querySelector('.vol-control')
-  console.log(volumeBar)
   volumeBar.addEventListener('input', function() {
     playerSource.volume = this.value
+  })
+
+  // Adjust time position
+  timeBar.addEventListener('input', function() {
+    playerSource.currentTime = this.value * playerSource.duration
   })
 }
